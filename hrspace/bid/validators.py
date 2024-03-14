@@ -1,0 +1,1 @@
+SALARY_VALIDATOR: int = 1
