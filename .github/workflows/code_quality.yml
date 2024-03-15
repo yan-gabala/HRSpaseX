@@ -32,4 +32,4 @@ jobs:
         isort==5.13.2 \
     - name: Run Flake8
       run: |
-        python flake8 --config=setup.cfg
+        python flake8
