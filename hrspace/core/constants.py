@@ -36,8 +36,8 @@ BUSINESS_TRIP_CHOICES = [
 ]
 
 EDUCATION_CHOICES = [
-   ("is_required", "Требуется"),
-   ("not_required", "Не требуется")
+    ("is_required", "Требуется"),
+    ("not_required", "Не требуется")
 ]
 
 EMPLOYMENT_CHOICES = [
@@ -60,8 +60,8 @@ PAYMENT_CHOCES = [
 ]
 
 PORTFOLIO_CHOICES = [
-   ("is_required", "Требуется"),
-   ("not_required", "Не требуется")
+    ("is_required", "Требуется"),
+    ("not_required", "Не требуется")
 ]
 
 RESPONSIBILITY_HR_CHOICES = [
@@ -76,10 +76,10 @@ RESPONSIBILITY_HR_CHOICES = [
 ]
 
 WORK_EXPERIENCE_CHOICES = [
-   ("without_experience", "Без опыта"),
-   ("up_to_year", "До года"),
-   ("from_one_to_three_years", "От 1 года до 3 лет"),
-   ("more_three_years", "Более 3 лет")
+    ("without_experience", "Без опыта"),
+    ("up_to_year", "До года"),
+    ("from_one_to_three_years", "От 1 года до 3 лет"),
+    ("more_three_years", "Более 3 лет")
 ]
 
 WORK_FORMAT_CHOICES = [
