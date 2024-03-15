@@ -1,13 +1,5 @@
-from core.constants import (BENEFITS_PACKAGE_CHOICES, BENEFITS_PACKAGE_LENGTH,
-                            BUSINESS_TRIP_CHOICES, BUSINESS_TRIP_LENGTH,
-                            CITY_CHOICES, EDUCATION_CHOICES, EDUCATION_LENGTH,
-                            EMPLOYMENT_CHOICES, FORMAT_INTERVIEWS_CHOICES,
-                            PAYMENT_CHOCES, PAYMENT_LENGTH, PORTFOLIO_CHOICES,
-                            PORTFOLIO_LENGTH, PROFESSION_CHOICES,
-                            RESPONSIBILITY_HR_CHOICES, TYPE_EMPLOYMENT_LENGTH,
-                            VACANCY_NAME, WORK_EXPERIENCE_CHOICES,
-                            WORK_EXPERIENCE_LENGTH, WORK_FORMAT_CHOICES,
-                            WORK_FORMAT_LENGTH, Limits)
+from core.constants import (CITY_CHOICES, EMPLOYMENT_CHOICES,
+                            PROFESSION_CHOICES, TYPE_EMPLOYMENT_LENGTH, Limits)
 from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
 from django.db import models
@@ -62,17 +54,17 @@ class Order(models.Model):
         ]
     )
     profession = models.ManyToManyField(
-            Profession,
-            related_name='professions',
-            verbose_name='Профессия'
+        Profession,
+        related_name='professions',
+        verbose_name='Профессия'
     )
     city = models.ManyToManyField(
-            Profession,
-            related_name='cities',
-            verbose_name='Город'
+        Profession,
+        related_name='cities',
+        verbose_name='Город'
     )
     type_employment = models.CharField(
-        verbose_name="Тип занятости",
+        verbose_name='Тип занятости',
         choices=EMPLOYMENT_CHOICES,
         max_length=TYPE_EMPLOYMENT_LENGTH
     )
@@ -96,11 +88,10 @@ class Order(models.Model):
             )
         ]
     )
-    # заказчик решил только руб
 
     class Meta:
-        verbose_name = "Заявка"
-        verbose_name_plural = "Заявки"
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
 
     def __str__(self):
         return self.name
