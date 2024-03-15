@@ -1,26 +1,13 @@
-from core.constants import (Limits,
-    BENEFITS_PACKAGE_CHOICES,
-    BENEFITS_PACKAGE_LENGTH,
-    BUSINESS_TRIP_CHOICES,
-    BUSINESS_TRIP_LENGTH,
-    EDUCATION_CHOICES,
-    EDUCATION_LENGTH,
-    EMPLOYMENT_CHOICES,
-    FORMAT_INTERVIEWS_CHOICES,
-    PAYMENT_CHOCES,
-    PAYMENT_LENGTH,
-    PORTFOLIO_CHOICES,
-    PORTFOLIO_LENGTH,
-    RESPONSIBILITY_HR_CHOICES,
-    TYPE_EMPLOYMENT_LENGTH,
-    VACANCY_NAME,
-    WORK_EXPERIENCE_CHOICES,
-    WORK_EXPERIENCE_LENGTH,
-    WORK_FORMAT_CHOICES,
-    WORK_FORMAT_LENGTH,
-    CITY_CHOICES,
-    PROFESSION_CHOICES
-)
+from core.constants import (BENEFITS_PACKAGE_CHOICES, BENEFITS_PACKAGE_LENGTH,
+                            BUSINESS_TRIP_CHOICES, BUSINESS_TRIP_LENGTH,
+                            CITY_CHOICES, EDUCATION_CHOICES, EDUCATION_LENGTH,
+                            EMPLOYMENT_CHOICES, FORMAT_INTERVIEWS_CHOICES,
+                            PAYMENT_CHOCES, PAYMENT_LENGTH, PORTFOLIO_CHOICES,
+                            PORTFOLIO_LENGTH, PROFESSION_CHOICES,
+                            RESPONSIBILITY_HR_CHOICES, TYPE_EMPLOYMENT_LENGTH,
+                            VACANCY_NAME, WORK_EXPERIENCE_CHOICES,
+                            WORK_EXPERIENCE_LENGTH, WORK_FORMAT_CHOICES,
+                            WORK_FORMAT_LENGTH, Limits)
 from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
 from django.db import models
@@ -30,7 +17,9 @@ class Profession(models.Model):
     """Модель Профессия"""
     name = models.CharField(
         max_length=Limits.DESIGNATION.value,
-        choices=PROFESSION_CHOICES,          # поменять на скрипт загрузки из файла в БД
+        # поменять на скрипт загрузки из файла в БД #
+        choices=PROFESSION_CHOICES,
+        # ------------------------------------------#
         verbose_name='Профессия'
     )
 
@@ -38,7 +27,7 @@ class Profession(models.Model):
         ordering = ('name',)
         verbose_name = 'Профессия'
         verbose_name_plural = 'Профессии'
-    
+
     def __str__(self):
         return f'{self.name}'
 
@@ -55,7 +44,7 @@ class City(models.Model):
         ordering = ('name',)
         verbose_name = 'Город'
         verbose_name_plural = 'Города'
-    
+
     def __str__(self):
         return f'{self.name}'
 
@@ -106,7 +95,7 @@ class Order(models.Model):
                 'Проверьте предлагаемую з/п'
             )
         ]
-    )  
+    )
     # заказчик решил только руб
 
     class Meta:
@@ -115,4 +104,3 @@ class Order(models.Model):
 
     def __str__(self):
         return self.name
-
