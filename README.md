@@ -46,8 +46,15 @@ source venv/Scripts/Activate
 source venv/bin/activate
 ```
 - Установите зависимости из файла requirements.txt
+
+Для Windows:
 ```
-python3 -m pip install --upgrade pip
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+для Linux:
+```
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 - Создайте переменные окружения в основной папке проекта "backend"
@@ -61,8 +68,12 @@ DEBUG=True
 ```
 ## Проект разрабатывали:
 
-| <!-- -->      | <!-- -->        | <!-- -->      |
-|:-------------:|:---------------:|:-------------:|
+| <!-- --> | <!-- -->      | <!-- -->    |
+|----------|---------------|-------------|
+| Сергей Виноградов | Python-разработчик | [Cтраница GitHub](https://github.com/yan-gabala) |
+| Юлия Семёнова | Python-разработчик | [Cтраница GitHub](https://github.com/JuliSem) |
+| Эдуард Гумен | Python-разработчик | [Cтраница GitHub](https://github.com/hydrospirt) |
+
 
 ## Лицензия
 
