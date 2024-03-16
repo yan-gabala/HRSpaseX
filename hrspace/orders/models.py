@@ -59,7 +59,7 @@ class Order(models.Model):
         verbose_name='Профессия'
     )
     city = models.ManyToManyField(
-        Profession,
+        City,
         related_name='cities',
         verbose_name='Город'
     )
@@ -83,7 +83,7 @@ class Order(models.Model):
         default=0,
         validators=[
             MaxValueValidator(
-                Limits.MIN_SАLARY.value,
+                Limits.MAX_SALARY.value,
                 'Проверьте предлагаемую з/п'
             )
         ]
