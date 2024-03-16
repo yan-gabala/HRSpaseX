@@ -3,6 +3,10 @@
 ![Code Quality](https://github.com/HRSpaceX/backend/actions/workflows/code_quality.yml/badge.svg?branch=dev)
 ![DRF](https://pypi-camo.freetls.fastly.net/18c2771271928b1071e8d436680f9a0abf272294/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f646a616e676f726573746672616d65776f726b2e737667)
 
+## Документация для работы в команде
+
+[![Code Style](https://img.shields.io/badge/Прочитать-Документацию_Code_Style-blue?style=for-the-badge)](https://github.com/HRSpaceX/backend/blob/e/chore/docs/.github/dev_docs/code_style_rules.md) [![Pull Request](https://img.shields.io/badge/Прочитать-Документацию_Pull_Request-2ea44f?style=for-the-badge)](https://github.com/HRSpaceX/backend/blob/e/chore/docs/.github/dev_docs/pull_requests_rules.md)
+
 ### Цель сервиса
 Дать заказчикам возможность размещать заявку на подбор по трем моделям оплаты. Рекрутерам – откликаться и вести переписку с клиентами в рамках внутреннего чата, направлять резюме и регистрировать вышедшего сотрудника (дата выхода и прохождение испытательного срока). 
 
