@@ -46,8 +46,15 @@ source venv/Scripts/Activate
 source venv/bin/activate
 ```
 - Установите зависимости из файла requirements.txt
+
+Для Windows:
 ```
-python3 -m pip install --upgrade pip
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+для Linux:
+```
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 - Создайте переменные окружения в основной папке проекта "backend"
