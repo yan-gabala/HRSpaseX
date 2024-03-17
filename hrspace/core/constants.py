@@ -6,7 +6,7 @@ class Limits(IntEnum):
     MAX_LEN_USERS_CHARFIELD = 150
     DESIGNATION = 200
     MIN_SАLARY = 17000
-    MAX_SALARY = 999
+    MAX_SALARY = 999999
     NAME_MAX_LEN: int = 100
 
 
