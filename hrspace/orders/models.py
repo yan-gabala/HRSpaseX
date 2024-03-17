@@ -130,7 +130,7 @@ class Order(models.Model):
         verbose_name='Профессия'
     )
     city = models.ManyToManyField(
-        City,
+        Profession,
         related_name='cities',
         verbose_name='Город'
     )
