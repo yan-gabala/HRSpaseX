@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from orders.models import City, Order, Profession
+from rest_framework import serializers
 
 
 class CitySerializer(serializers.ModelSerializer):

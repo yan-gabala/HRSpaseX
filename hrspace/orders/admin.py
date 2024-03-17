@@ -16,6 +16,3 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Profession)
 class ProfessionAdmin(admin.ModelAdmin):
     pass
-
-
-
