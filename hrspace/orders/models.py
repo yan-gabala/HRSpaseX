@@ -1,13 +1,14 @@
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    RegexValidator)
+from django.db import models
+
 from core.constants import (BENEFITS_PACKAGE_CHOICES, BUSINESS_TRIP_CHOICES,
                             CITY_CHOICES, EDUCATION_CHOICES,
                             EMPLOYMENT_CHOICES, HR_RESPONSIBILITY_CHOICES,
                             INFO_CANDIDATES_CHOICES, PAYMENT_CHOICES,
-                            PORTFOLIO_CHOICES, PROFESSION_CHOICES,
-                            WORK_EXPERIENCE_CHOICES, WORK_FORMAT_CHOICES,
-                            Limits)
-from django.core.validators import (MaxValueValidator, MinValueValidator,
-                                    RegexValidator)
-from django.db import models
+                            PAYMENT_HR_CHOICES, PORTFOLIO_CHOICES,
+                            PROFESSION_CHOICES, WORK_EXPERIENCE_CHOICES,
+                            WORK_FORMAT_CHOICES, Limits)
 
 
 class Profession(models.Model):
@@ -82,8 +83,7 @@ class Skill(models.Model):
 
 class HrResponsibility(models.Model):
     """Модель Обязанности рекрутера"""
-    name = models.CharField(
-        max_length=Limits.DESIGNATION.value,
+    name = models.PositiveIntegerField(
         choices=HR_RESPONSIBILITY_CHOICES,
         verbose_name='Обязанности рекрутера'
     )
@@ -168,12 +168,12 @@ class Order(models.Model):
         related_name='employments',
         verbose_name='Тип занятости'
     )
-    start_work = models.TimeField(
+    start_work_day = models.TimeField(
         verbose_name='Начало рабочего дня',
         null=True,
         blank=True
     )
-    end_work = models.TimeField(
+    end_work_day = models.TimeField(
         verbose_name='Окончание рабочего дня',
         null=True,
         blank=True
@@ -224,7 +224,7 @@ class Order(models.Model):
     )
     payment_hr = models.PositiveIntegerField(
         verbose_name='Выплата рекрутеру',
-        choices=PAYMENT_CHOICES
+        choices=PAYMENT_HR_CHOICES
     )
     award = models.PositiveIntegerField(
         verbose_name='Вознаграждение за сотрудника',
