@@ -193,6 +193,9 @@ class Order(models.Model):
         choices=BUSINESS_TRIP_CHOICES,
         max_length=Limits.BUSINESS_TRIP_LENGTH.value
     )
+    features_vacancy = models.TextField(
+        verbose_name='Особенности вакансии',
+    )
     work_experience = models.CharField(
         verbose_name='Опыт работы',
         choices=WORK_EXPERIENCE_CHOICES,
