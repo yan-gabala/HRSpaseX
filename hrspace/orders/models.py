@@ -8,7 +8,7 @@ from core.constants import (BENEFITS_PACKAGE_CHOICES, BUSINESS_TRIP_CHOICES,
                             INFO_CANDIDATES_CHOICES, PAYMENT_CHOICES,
                             PAYMENT_HR_CHOICES, PORTFOLIO_CHOICES,
                             PROFESSION_CHOICES, WORK_EXPERIENCE_CHOICES,
-                            WORK_FORMAT_CHOICES, Limits)
+                            WORK_FORMAT_CHOICES, SСHEDULE_CHOICES, Limits)
 
 
 class Profession(models.Model):
@@ -167,6 +167,11 @@ class Order(models.Model):
         TypeEmployment,
         related_name='employments',
         verbose_name='Тип занятости'
+    )
+    schedule = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        choices=SСHEDULE_CHOICES,
+        verbose_name='График работы'
     )
     start_work_day = models.TimeField(
         verbose_name='Начало рабочего дня',

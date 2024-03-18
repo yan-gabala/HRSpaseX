@@ -42,11 +42,17 @@ EDUCATION_CHOICES = [
 ]
 
 EMPLOYMENT_CHOICES = [
-    ("full_day", "Полный день"),
-    ("shift_schedule", "Сменный график"),
-    ("flexible_schedule", "Гибкий график"),
-    ("remote_work", "Удалённая работа"),
-    ("watch_method", "Вахтовый метод")
+    ('full', 'Полная'),
+    ('partial', 'Частичная'),
+    ('project', 'Проектная'),
+    ('internship', 'Стажировка'),
+]
+
+SСHEDULE_CHOICES = [
+    ('full_day', 'Полный день'),
+    ('flexible schedule', 'Гибкий график'),
+    ('shift work', 'Сменный график'),
+    ('watch', 'Вахтовый метод'),
 ]
 
 FORMAT_INTERVIEWS_CHOICES = [
