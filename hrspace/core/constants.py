@@ -2,6 +2,7 @@ from enum import IntEnum
 
 
 class Limits(IntEnum):
+    ACTIVITY_MAX_LEN = 50
     BUSINESS_TRIP_LENGTH = 50
     DESIGNATION = 200
     EDUCATION_LENGTH = 50
@@ -16,52 +17,53 @@ class Limits(IntEnum):
     PORTFOLIO_LENGTH = 50
     WORK_EXPERIENCE_LENGTH = 100
     WORK_FORMAT_LENGTH = 200
+    INTERVIEW_MAX_LEN = 100
 
 
-BENEFITS_PACKAGE_CHOICES = [
+BENEFITS_PACKAGE_CHOICES = (
     ('VHI', 'ДМС'),
     ('vocation', 'Отпуск'),
     ('free_education', 'Компенсация обучения'),
     ('free_meals', 'Компенсация питания')
-]
+)
 
-BUSINESS_TRIP_CHOICES = [
+BUSINESS_TRIP_CHOICES = (
     ('yes', 'Да'),
     ('no', 'Нет'),
     ('sometimes', 'Иногда')
-]
+)
 
-CITY_CHOICES = [
+CITY_CHOICES = (
     ('tver', 'Тверь'),
     ('pskov', 'Псков')
-]
+)
 
-EDUCATION_CHOICES = [
+EDUCATION_CHOICES = (
     ('is_required', 'Требуется'),
     ('not_required', 'Не требуется')
-]
+)
 
-EMPLOYMENT_CHOICES = [
+EMPLOYMENT_CHOICES = (
     ('full', 'Полная'),
     ('partial', 'Частичная'),
     ('project', 'Проектная'),
     ('internship', 'Стажировка'),
-]
+)
 
-SСHEDULE_CHOICES = [
+SСHEDULE_CHOICES = (
     ('full_day', 'Полный день'),
     ('flexible schedule', 'Гибкий график'),
     ('shift work', 'Сменный график'),
     ('watch', 'Вахтовый метод'),
-]
+)
 
-FORMAT_INTERVIEWS_CHOICES = [
+FORMAT_INTERVIEWS_CHOICES = (
     (1, 'Со всеми кандидатами с релевантным резюме'),
     (2, 'Итоговое собеседование с кандидатами, '
-        'прошедшими предварительный отбор')
-]
+        + 'прошедшими предварительный отбор')
+)
 
-HR_RESPONSIBILITY_CHOICES = [
+HR_RESPONSIBILITY_CHOICES = (
     (1, 'Поиск и предоставление релевантных резюме'),
     (2, 'Проведение первичных интервью'),
     (3, 'Организация собеседований с заказчиком + '
@@ -70,48 +72,53 @@ HR_RESPONSIBILITY_CHOICES = [
     (5, 'Отправка кандидату тестового задания'),
     (6, 'Отправка кандидату дополнительной анкеты'),
     (7, 'Отправка финалисту приглашения на работу')
-]
+)
 
-INFO_CANDIDATES_CHOICES = [
+INFO_CANDIDATES_CHOICES = (
     (1, 'Резюме без предварительного собеседования'),
     (2, 'Резюме кандидатов с проведенными первичными интервью')
-]
+)
 
-PAYMENT_CHOICES = [
+PAYMENT_CHOICES = (
     ('credit_card', 'Банковская карта'),
     ('instant_payment_system', 'СБП')
-]
+)
 
-PAYMENT_HR_CHOICES = [
+PAYMENT_HR_CHOICES = (
     (1, '100% за выход сотрудника'),
     (2, '50% за выход и 50% по окончанию гарантийного периода'),
     (3, '100% по окончанию гарантийного периода')
-]
+)
 
-PORTFOLIO_CHOICES = [
+PORTFOLIO_CHOICES = (
     ('is_required', 'Требуется'),
     ('not_required', 'Не требуется')
-]
+)
 
-PROFESSION_CHOICES = [
+PROFESSION_CHOICES = (
     ('analyst', 'Аналитик данных'),
     ('data_scientist', 'Специалист по Data Science'),
     ('python_dev', 'Python-разработчик'),
     ('web_dev', 'Веб-разработчик'),
     ('qa_engineer', 'Инженер по тестированию(QA)'),
-]
+)
 
-WORK_EXPERIENCE_CHOICES = [
-    ('doesnot_matter', 'Не имеет значение')
+WORK_EXPERIENCE_CHOICES = (
+    ('doesnot_matter', 'Не имеет значение'),
     ('up_to_year', 'До года'),
     ('from_one_to_three_years', 'От 1 года до 3 лет'),
     ('from_three_to_six_years', 'От 3 года до 6 лет'),
-    ('more_six_years', 'Более 6 лет')
+    ('more_six_years', 'Более 6 лет'),
     ('without_experience', 'Без опыта'),
-]
+)
 
-WORK_FORMAT_CHOICES = [
+WORK_FORMAT_CHOICES = (
     ('remote', 'Удалённая'),
     ('mixed', 'Гибрид'),
     ('office', 'Офис')
-]
+)
+
+ACTIVITY_FORMAT_HR = (
+    (1, 'Только для юридических лиц и ИП'),
+    (2, 'Только для самозанятых и фрилансеров')
+)
