@@ -83,7 +83,8 @@ class Skill(models.Model):
 
 class HrResponsibility(models.Model):
     """Модель Обязанности рекрутера"""
-    name = models.PositiveIntegerField(
+    name = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
         choices=HR_RESPONSIBILITY_CHOICES,
         verbose_name='Обязанности рекрутера'
     )
