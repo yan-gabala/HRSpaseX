@@ -102,10 +102,12 @@ PROFESSION_CHOICES = [
 ]
 
 WORK_EXPERIENCE_CHOICES = [
-    ('without_experience', 'Без опыта'),
+    ('doesnot_matter', 'Не имеет значение')
     ('up_to_year', 'До года'),
     ('from_one_to_three_years', 'От 1 года до 3 лет'),
-    ('more_three_years', 'Более 3 лет')
+    ('from_three_to_six_years', 'От 3 года до 6 лет'),
+    ('more_six_years', 'Более 6 лет')
+    ('without_experience', 'Без опыта'),
 ]
 
 WORK_FORMAT_CHOICES = [
