@@ -8,7 +8,7 @@ from core.constants import (BENEFITS_PACKAGE_CHOICES, BUSINESS_TRIP_CHOICES,
                             INFO_CANDIDATES_CHOICES, PAYMENT_CHOICES,
                             PAYMENT_HR_CHOICES, PORTFOLIO_CHOICES,
                             PROFESSION_CHOICES, WORK_EXPERIENCE_CHOICES,
-                            WORK_FORMAT_CHOICES, SСHEDULE_CHOICES, Limits)
+                            WORK_FORMAT_CHOICES, SСHEDULE_CHOICES, FORMAT_INTERVIEWS_CHOICES, Limits)
 
 
 class Profession(models.Model):
@@ -244,6 +244,11 @@ class Order(models.Model):
     start_work = models.DateField(
         verbose_name='Дата вступления сотрудника в должность'
     )
+    format_interview = models.CharField(
+        verbose_name='Формат собеседований',
+        choices=FORMAT_INTERVIEWS_CHOICES,
+    )
+
     hr_responsibility = models.ManyToManyField(
         HrResponsibility,
         related_name='responsobilities',
