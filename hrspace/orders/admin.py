@@ -1,5 +1,6 @@
 from django.contrib import admin
-from orders.models import (BenefitsPackage, City, HrResponsibility, Order,
+from orders.models import (BenefitsPackage, City, HrRequirements,
+                           HrResponsibility, Order,
                            Profession, Skill, TypeEmployment)
 
 
@@ -28,3 +29,4 @@ admin.site.register(HrResponsibility)
 admin.site.register(Profession)
 admin.site.register(Skill)
 admin.site.register(TypeEmployment)
+admin.site.register(HrRequirements)
