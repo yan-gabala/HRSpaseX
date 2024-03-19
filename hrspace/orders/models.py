@@ -17,7 +17,7 @@ from django.db import models
 
 
 class Profession(models.Model):
-    """Модель Профессия"""
+    """Модель Сфера деятельности"""
     name = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
         # поменять на скрипт загрузки из файла в БД #
@@ -67,9 +67,6 @@ class TypeEmployment(models.Model):
 
     def __str__(self):
         return f'{self.name}'
-
-
-
 
 
 class Skill(models.Model):
@@ -148,7 +145,7 @@ class Order(models.Model):
     profession = models.ForeignKey(
         Profession,
         on_delete=models.CASCADE,
-        related_name='professions',
+        related_name='orders',
         verbose_name='Профессия'
     )
     city = models.ForeignKey(
