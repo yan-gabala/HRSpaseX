@@ -95,7 +95,7 @@ PORTFOLIO_CHOICES = (
     ('not_required', 'Не требуется')
 )
 
-PROFESSION_CHOICES = (
+LINE_OF_BUISNESS_CHOICES = (
     ('analyst', 'Аналитик данных'),
     ('data_scientist', 'Специалист по Data Science'),
     ('python_dev', 'Python-разработчик'),
