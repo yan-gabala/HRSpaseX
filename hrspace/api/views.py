@@ -1,7 +1,6 @@
-from rest_framework.viewsets import ModelViewSet
-
 from api.serializers import CitySerializer, ProfessionSerializer
 from orders.models import City, Order, Profession
+from rest_framework.viewsets import ModelViewSet
 
 
 class CityViewSet(ModelViewSet):

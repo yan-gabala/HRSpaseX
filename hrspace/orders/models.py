@@ -1,7 +1,3 @@
-from django.core.validators import (MaxValueValidator, MinValueValidator,
-                                    RegexValidator)
-from django.db import models
-
 from core.constants import (BENEFITS_PACKAGE_CHOICES, BUSINESS_TRIP_CHOICES,
                             CITY_CHOICES, EDUCATION_CHOICES,
                             EMPLOYMENT_CHOICES, HR_RESPONSIBILITY_CHOICES,
@@ -10,6 +6,9 @@ from core.constants import (BENEFITS_PACKAGE_CHOICES, BUSINESS_TRIP_CHOICES,
                             PROFESSION_CHOICES, SСHEDULE_CHOICES,
                             WORK_EXPERIENCE_CHOICES,
                             WORK_FORMAT_CHOICES, Limits)
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    RegexValidator)
+from django.db import models
 
 
 class Profession(models.Model):
