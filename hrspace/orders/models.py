@@ -9,7 +9,7 @@ from core.constants import (ACTIVITY_FORMAT_HR, BENEFITS_PACKAGE_CHOICES,
                             HR_RESPONSIBILITY_CHOICES, INFO_CANDIDATES_CHOICES,
                             PAYMENT_CHOICES, PAYMENT_HR_CHOICES,
                             PORTFOLIO_CHOICES, PROFESSION_CHOICES,
-                            SСHEDULE_CHOICES, WORK_EXPERIENCE_CHOICES,
+                            SСHEDULE_CHOICES, WORK_EXPERIENCE_CHOICES, 
                             WORK_FORMAT_CHOICES, Limits)
 from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
@@ -22,13 +22,13 @@ class Profession(models.Model):
         max_length=Limits.NAME_MAX_LEN.value,
         # поменять на скрипт загрузки из файла в БД #
         choices=PROFESSION_CHOICES,
-        verbose_name='Профессия'
+        verbose_name='Сфера деятельности'
     )
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'Профессия'
-        verbose_name_plural = 'Профессии'
+        verbose_name = 'Сфера деятельности'
+        verbose_name_plural = 'Сферы деятельности'
 
     def __str__(self):
         return f'{self.name}'
@@ -89,8 +89,8 @@ class Skill(models.Model):
 class HrResponsibility(models.Model):
     """Модель Обязанности рекрутера"""
     name = models.CharField(
-        max_length=Limits.NAME_MAX_LEN.value,
         choices=HR_RESPONSIBILITY_CHOICES,
+        max_length=Limits.NAME_MAX_LEN.value,
         verbose_name='Обязанности рекрутера'
     )
 
@@ -104,14 +104,17 @@ class HrResponsibility(models.Model):
 
 class HrRequirements(models.Model):
     """Модель Требования к рекрутеру"""
-    description = models.TextField(
-        verbose_name='Требования к рекрутеру'
-    )
-    activity = models.CharField(
+    name = models.CharField(
         choices=ACTIVITY_FORMAT_HR,
         verbose_name='Форма деятельности',
         max_length=Limits.ACTIVITY_MAX_LEN.value
     )
+    class Meta:
+        verbose_name = 'Форма деятельности'
+        verbose_name_plural = 'Формы деятельности'
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class BenefitsPackage(models.Model):
@@ -132,6 +135,8 @@ class BenefitsPackage(models.Model):
 
 class Order(models.Model):
     """Модель Заявка"""
+
+    """1 поле"""
     name = models.CharField(
         max_length=Limits.DESIGNATION.value,
         verbose_name='Название вакансии',
@@ -142,23 +147,27 @@ class Order(models.Model):
             )
         ]
     )
+    """2 поле"""
     profession = models.ForeignKey(
         Profession,
         on_delete=models.CASCADE,
         related_name='orders',
-        verbose_name='Профессия'
+        verbose_name='Сфера деятельности'
     )
+    """3 поле"""
     city = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
         related_name='cities',
         verbose_name='Город'
     )
+    """4 поле"""
     work_format = models.CharField(
         verbose_name='Формат работы',
         choices=WORK_FORMAT_CHOICES,
         max_length=Limits.WORK_FORMAT_LENGTH.value
     )
+    """5 поле"""
     salary_from = models.PositiveIntegerField(
         verbose_name='Минимальная зарплата gross(до вычета НДФЛ)',
         default=0,
@@ -169,6 +178,7 @@ class Order(models.Model):
             )
         ]
     )
+    """6 поле"""
     salary_to = models.PositiveIntegerField(
         verbose_name='Максимальная зарплата gross(до вычета НДФЛ)',
         default=0,
@@ -179,54 +189,38 @@ class Order(models.Model):
             )
         ]
     )
-    amount_of_subordinate = models.PositiveIntegerField(
-        verbose_name='Количество подчинённых в управлении',
-        default=0
-    )
-    type_employment = models.ManyToManyField(
-        TypeEmployment,
-        related_name='employments',
-        verbose_name='Тип занятости'
-    )
-    schedule = models.CharField(
-        max_length=Limits.NAME_MAX_LEN.value,
-        choices=SСHEDULE_CHOICES,
-        verbose_name='График работы'
-    )
+    """7 поле"""
     start_work_day = models.TimeField(
         verbose_name='Начало рабочего дня',
         null=True,
         blank=True
     )
-    end_work_day = models.TimeField(  # добавить варианты конца
+    """8 поле"""
+    end_work_day = models.TimeField(
         verbose_name='Окончание рабочего дня',
         null=True,
         blank=True
     )
+    """9 поле"""
     schedule = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
         choices=SСHEDULE_CHOICES,
         verbose_name='График работы'
     )
-    type_employment = models.CharField(
-        max_length=Limits.NAME_MAX_LEN.value,
-        choices=EMPLOYMENT_CHOICES,
+    """10 поле"""
+    type_employment = models.ForeignKey(
+        TypeEmployment,
+        on_delete=models.CASCADE,
+        related_name='employments',
         verbose_name='Тип занятости'
     )
-
-
-
-
-
-
-
+    ###########################################
+    #
+    ###########################################
     amount_of_subordinate = models.PositiveIntegerField(
         verbose_name='Количество подчинённых в управлении',
         default=0
     )
-    
-    
-    
     benefits_package = models.ManyToManyField(
         BenefitsPackage,
         related_name='packages',
@@ -263,7 +257,6 @@ class Order(models.Model):
         related_name='skills',
         verbose_name='Ключевые навыки'
     )
-
     amount_of_employees = models.PositiveIntegerField(
         verbose_name='Количество сотрудников',
         default=0,
@@ -274,9 +267,10 @@ class Order(models.Model):
             )
         ]
     )
-    payment_hr = models.PositiveIntegerField(
+    payment_hr = models.CharField(
         verbose_name='Выплата рекрутеру',
-        choices=PAYMENT_HR_CHOICES
+        choices=PAYMENT_HR_CHOICES,
+        max_length=100
     )
     award = models.PositiveIntegerField(
         verbose_name='Вознаграждение за сотрудника',
@@ -293,7 +287,6 @@ class Order(models.Model):
         choices=FORMAT_INTERVIEWS_CHOICES,
         max_length=Limits.INTERVIEW_MAX_LEN.value
     )
-
     hr_responsibility = models.ManyToManyField(
         HrResponsibility,
         related_name='responsobilities',
