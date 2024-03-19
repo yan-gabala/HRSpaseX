@@ -1,10 +1,15 @@
-from core.constants import (BENEFITS_PACKAGE_CHOICES, BUSINESS_TRIP_CHOICES,
-                            CITY_CHOICES, EDUCATION_CHOICES,
-                            EMPLOYMENT_CHOICES, HR_RESPONSIBILITY_CHOICES,
-                            INFO_CANDIDATES_CHOICES, PAYMENT_CHOICES,
-                            PAYMENT_HR_CHOICES, PORTFOLIO_CHOICES,
-                            PROFESSION_CHOICES, SСHEDULE_CHOICES,
-                            WORK_EXPERIENCE_CHOICES,
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    RegexValidator)
+from django.db import models
+
+from core.constants import (ACTIVITY_FORMAT_HR, BENEFITS_PACKAGE_CHOICES,
+                            BUSINESS_TRIP_CHOICES, CITY_CHOICES,
+                            EDUCATION_CHOICES, EMPLOYMENT_CHOICES,
+                            FORMAT_INTERVIEWS_CHOICES,
+                            HR_RESPONSIBILITY_CHOICES, INFO_CANDIDATES_CHOICES,
+                            PAYMENT_CHOICES, PAYMENT_HR_CHOICES,
+                            PORTFOLIO_CHOICES, PROFESSION_CHOICES,
+                            SСHEDULE_CHOICES, WORK_EXPERIENCE_CHOICES,
                             WORK_FORMAT_CHOICES, Limits)
 from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
@@ -100,6 +105,18 @@ class HrResponsibility(models.Model):
         return f'{self.name}'
 
 
+class HrRequirements(models.Model):
+    """Модель Требования к рекрутеру"""
+    description = models.TextField(
+        verbose_name='Требования к рекрутеру'
+    )
+    activity = models.CharField(
+        choices=ACTIVITY_FORMAT_HR,
+        verbose_name='Форма деятельности',
+        max_length=Limits.ACTIVITY_MAX_LEN.value
+    )
+
+
 class BenefitsPackage(models.Model):
     """Модель Социальный пакет"""
     name = models.CharField(
@@ -165,7 +182,21 @@ class Order(models.Model):
             )
         ]
     )
-    start_work_day = models.TimeField(  # добавить варианты начала
+    amount_of_subordinate = models.PositiveIntegerField(
+        verbose_name='Количество подчинённых в управлении',
+        default=0
+    )
+    type_employment = models.ManyToManyField(
+        TypeEmployment,
+        related_name='employments',
+        verbose_name='Тип занятости'
+    )
+    schedule = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        choices=SСHEDULE_CHOICES,
+        verbose_name='График работы'
+    )
+    start_work_day = models.TimeField(
         verbose_name='Начало рабочего дня',
         null=True,
         blank=True
@@ -208,6 +239,9 @@ class Order(models.Model):
         verbose_name='Командировка',
         choices=BUSINESS_TRIP_CHOICES,
         max_length=Limits.BUSINESS_TRIP_LENGTH.value
+    )
+    features_vacancy = models.TextField(
+        verbose_name='Особенности вакансии',
     )
     work_experience = models.CharField(
         verbose_name='Опыт работы',
@@ -257,10 +291,21 @@ class Order(models.Model):
     start_work = models.DateField(
         verbose_name='Дата вступления сотрудника в должность'
     )
+    format_interview = models.CharField(
+        verbose_name='Формат собеседований',
+        choices=FORMAT_INTERVIEWS_CHOICES,
+        max_length=Limits.INTERVIEW_MAX_LEN.value
+    )
+
     hr_responsibility = models.ManyToManyField(
         HrResponsibility,
         related_name='responsobilities',
         verbose_name='Обязанности рекрутера',
+    )
+    hr_requirements = models.ManyToManyField(
+        HrRequirements,
+        related_name='requirements',
+        verbose_name='Требования к рекрутеру'
     )
     info_candidates = models.PositiveIntegerField(
         verbose_name='Предоставление данных о кандидатах',
