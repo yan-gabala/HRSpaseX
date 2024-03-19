@@ -1,5 +1,5 @@
-from api.serializers import CitySerializer, ProfessionSerializer
-from orders.models import City, Order, Profession
+from api.serializers import CitySerializer, LineOfBuisnessSerializer
+from orders.models import City, Order, LineOfBuisness
 from rest_framework.viewsets import ModelViewSet
 
 
@@ -9,10 +9,10 @@ class CityViewSet(ModelViewSet):
 
 
 class ProfessionViewSet(ModelViewSet):
-    queryset = Profession.objects.all()
-    serializer_class = ProfessionSerializer
+    queryset = LineOfBuisness.objects.all()
+    serializer_class = LineOfBuisnessSerializer
 
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
-    serializer_class = ProfessionSerializer
+    serializer_class = LineOfBuisnessSerializer
