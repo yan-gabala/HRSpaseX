@@ -7,7 +7,8 @@ from core.constants import (BENEFITS_PACKAGE_CHOICES, BUSINESS_TRIP_CHOICES,
                             EMPLOYMENT_CHOICES, HR_RESPONSIBILITY_CHOICES,
                             INFO_CANDIDATES_CHOICES, PAYMENT_CHOICES,
                             PAYMENT_HR_CHOICES, PORTFOLIO_CHOICES,
-                            PROFESSION_CHOICES, WORK_EXPERIENCE_CHOICES,
+                            PROFESSION_CHOICES, SСHEDULE_CHOICES,
+                            WORK_EXPERIENCE_CHOICES,
                             WORK_FORMAT_CHOICES, Limits)
 
 
@@ -62,6 +63,9 @@ class TypeEmployment(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+
 
 
 class Skill(models.Model):
@@ -125,13 +129,15 @@ class Order(models.Model):
             )
         ]
     )
-    profession = models.ManyToManyField(
+    profession = models.ForeignKey(
         Profession,
+        on_delete=models.CASCADE,
         related_name='professions',
         verbose_name='Профессия'
     )
-    city = models.ManyToManyField(
+    city = models.ForeignKey(
         City,
+        on_delete=models.CASCADE,
         related_name='cities',
         verbose_name='Город'
     )
@@ -160,25 +166,40 @@ class Order(models.Model):
             )
         ]
     )
-    amount_of_subordinate = models.PositiveIntegerField(
-        verbose_name='Количество подчинённых в управлении',
-        default=0
-    )
-    type_employment = models.ManyToManyField(
-        TypeEmployment,
-        related_name='employments',
-        verbose_name='Тип занятости'
-    )
-    start_work_day = models.TimeField(
+    start_work_day = models.TimeField(  # добавить варианты начала
         verbose_name='Начало рабочего дня',
         null=True,
         blank=True
     )
-    end_work_day = models.TimeField(
+    end_work_day = models.TimeField(  # добавить варианты конца
         verbose_name='Окончание рабочего дня',
         null=True,
         blank=True
     )
+    schedule = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        choices=SСHEDULE_CHOICES,
+        verbose_name='График работы'
+    )
+    type_employment = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        choices=EMPLOYMENT_CHOICES,
+        verbose_name='Тип занятости'
+    )
+
+
+
+
+
+
+
+    amount_of_subordinate = models.PositiveIntegerField(
+        verbose_name='Количество подчинённых в управлении',
+        default=0
+    )
+    
+    
+    
     benefits_package = models.ManyToManyField(
         BenefitsPackage,
         related_name='packages',

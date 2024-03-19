@@ -95,6 +95,13 @@ PROFESSION_CHOICES = [
     ("qa_engineer", "Инженер по тестированию(QA)"),
 ]
 
+SСHEDULE_CHOICES = [
+    ('full_day', 'Полный день'),
+    ('flexible schedule', 'Гибкий график'),
+    ('shift work', 'Сменный график'),
+    ('watch', 'Вахтовый метод'),
+]
+
 WORK_EXPERIENCE_CHOICES = [
     ("without_experience", "Без опыта"),
     ("up_to_year", "До года"),
