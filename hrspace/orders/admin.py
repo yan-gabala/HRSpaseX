@@ -1,21 +1,22 @@
 from django.contrib import admin
+
 from orders.models import (BenefitsPackage, City, HrRequirements,
-                           HrResponsibility, Order,
-                           Profession, Skill, TypeEmployment)
+                           HrResponsibility, LineOfBuisness, Order, Skill,
+                           TypeEmployment)
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'get_profession', 'get_city', 'work_format',
+        'name', 'get_line_of_buisness', 'get_city', 'work_format',
         'salary_from', 'salary_to'
     )
-    list_filter = ('profession', 'city', 'work_format')
+    list_filter = ('line_of_buisness', 'city', 'work_format')
 
-    def get_profession(self, row):
-        return ','.join([obj.name for obj in row.profession.all()])
+    def get_line_of_buisness(self, row):
+        return ','.join([obj.name for obj in row.line_of_buisness.all()])
 
-    get_profession.short_description = 'Профессия'
+    get_line_of_buisness.short_description = 'Профессия'
 
     def get_city(self, row):
         return ','.join([obj.name for obj in row.city.all()])
@@ -26,7 +27,7 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(BenefitsPackage)
 admin.site.register(City)
 admin.site.register(HrResponsibility)
-admin.site.register(Profession)
+admin.site.register(LineOfBuisness)
 admin.site.register(Skill)
 admin.site.register(TypeEmployment)
 admin.site.register(HrRequirements)
