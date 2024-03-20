@@ -1,6 +1,8 @@
-from api.serializers import CitySerializer, LineOfBuisnessSerializer
-from orders.models import City, Order, LineOfBuisness
 from rest_framework.viewsets import ModelViewSet
+
+from api.serializers import (CitySerializer, LineOfBusinessSerializer,
+                             OrderSerializer)
+from orders.models import City, LineOfBusiness, Order
 
 
 class CityViewSet(ModelViewSet):
@@ -8,11 +10,11 @@ class CityViewSet(ModelViewSet):
     serializer_class = CitySerializer
 
 
-class ProfessionViewSet(ModelViewSet):
-    queryset = LineOfBuisness.objects.all()
-    serializer_class = LineOfBuisnessSerializer
+class LineOfBusinessViewSet(ModelViewSet):
+    queryset = LineOfBusiness.objects.all()
+    serializer_class = LineOfBusinessSerializer
 
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
-    serializer_class = LineOfBuisnessSerializer
+    serializer_class = OrderSerializer

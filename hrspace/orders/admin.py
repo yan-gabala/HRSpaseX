@@ -1,22 +1,20 @@
 from django.contrib import admin
-
-from orders.models import (BenefitsPackage, City, HrRequirements,
-                           HrResponsibility, LineOfBuisness, Order, Skill,
-                           TypeEmployment)
+from orders.models import (City, HrResponsibility, LineOfBusiness, Order,
+                           Skill)
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'get_line_of_buisness', 'get_city', 'work_format',
+        'name', 'get_line_of_business', 'get_city', 'work_format',
         'salary_from', 'salary_to'
     )
-    list_filter = ('line_of_buisness', 'city', 'work_format')
+    list_filter = ('line_of_business', 'city', 'work_format')
 
-    def get_line_of_buisness(self, row):
-        return ','.join([obj.name for obj in row.line_of_buisness.all()])
+    def get_line_of_business(self, row):
+        return ','.join([obj.name for obj in row.line_of_business.all()])
 
-    get_line_of_buisness.short_description = 'Профессия'
+    get_line_of_business.short_description = 'Сфера'
 
     def get_city(self, row):
         return ','.join([obj.name for obj in row.city.all()])
@@ -24,10 +22,7 @@ class OrderAdmin(admin.ModelAdmin):
     get_city.short_description = 'Город'
 
 
-admin.site.register(BenefitsPackage)
 admin.site.register(City)
 admin.site.register(HrResponsibility)
-admin.site.register(LineOfBuisness)
+admin.site.register(LineOfBusiness)
 admin.site.register(Skill)
-admin.site.register(TypeEmployment)
-admin.site.register(HrRequirements)

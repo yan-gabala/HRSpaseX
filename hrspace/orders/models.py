@@ -2,17 +2,26 @@ from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
 from django.db import models
 
-from core.constants import (ACTIVITY_FORMAT_HR, BENEFITS_PACKAGE_CHOICES,
+from core.constants import (ACTIVITY_FORMAT_HR, AMOUNT_HR_CHOICES,
+                            AWARD_OPTION_CHOICES,
                             BUSINESS_TRIP_CHOICES, CITY_CHOICES,
                             EDUCATION_CHOICES, EMPLOYMENT_CHOICES,
                             FORMAT_INTERVIEWS_CHOICES,
+<<<<<<< HEAD
                             HR_RESPONSIBILITY_CHOICES, INFO_CANDIDATES_CHOICES,
                             PAYMENT_CHOICES, PAYMENT_HR_CHOICES,
                             PORTFOLIO_CHOICES, LINE_OF_BUISNESS_CHOICES,
                             SСHEDULE_CHOICES, WORK_EXPERIENCE_CHOICES,
+=======
+                            HR_RESPONSIBILITY_CHOICES,
+                            LINE_OF_BUSINESS_CHOICES,
+                            PORTFOLIO_CHOICES, SCHEDULE_CHOICES,
+                            WORK_EXPERIENCE_CHOICES,
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
                             WORK_FORMAT_CHOICES, Limits)
 
 
+<<<<<<< HEAD
 class LineOfBuisness(models.Model):
     """Модель Сфера деятельности"""
     name = models.CharField(
@@ -20,12 +29,26 @@ class LineOfBuisness(models.Model):
         # поменять на скрипт загрузки из файла в БД #
         choices=LINE_OF_BUISNESS_CHOICES,
         verbose_name='Сфера деятельности'
+=======
+class LineOfBusiness(models.Model):
+    """Модель Сфера"""
+    name = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        # поменять на скрипт загрузки из файла в БД #
+        choices=LINE_OF_BUSINESS_CHOICES,
+        verbose_name='Сфера'  # У дизайнеров в макете поле названо сфера
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
     )
 
     class Meta:
         ordering = ('name',)
+<<<<<<< HEAD
         verbose_name = 'Сфера деятельности'
         verbose_name_plural = 'Сферы деятельности'
+=======
+        verbose_name = 'Сфера'
+        verbose_name_plural = 'Сферы'
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
 
     def __str__(self):
         return f'{self.name}'
@@ -49,6 +72,7 @@ class City(models.Model):
         return f'{self.name}'
 
 
+<<<<<<< HEAD
 class TypeEmployment(models.Model):
     """Модель Тип занятости"""
     name = models.CharField(
@@ -66,6 +90,8 @@ class TypeEmployment(models.Model):
         return f'{self.name}'
 
 
+=======
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
 class Skill(models.Model):
     """Модель Ключевые навыки"""
     name = models.CharField(
@@ -85,7 +111,12 @@ class Skill(models.Model):
 
 class HrResponsibility(models.Model):
     """Модель Обязанности рекрутера"""
+<<<<<<< HEAD
     name = models.CharField(
+=======
+    name = models.CharField(  # Поменять на PositiveIntegerField ?
+        max_length=Limits.NAME_MAX_LEN.value,
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
         choices=HR_RESPONSIBILITY_CHOICES,
         max_length=Limits.NAME_MAX_LEN.value,
         verbose_name='Обязанности рекрутера'
@@ -115,22 +146,6 @@ class HrRequirements(models.Model):
         return f'{self.name}'
 
 
-class BenefitsPackage(models.Model):
-    """Модель Социальный пакет"""
-    name = models.CharField(
-        max_length=Limits.NAME_MAX_LEN.value,
-        choices=BENEFITS_PACKAGE_CHOICES,
-        verbose_name='Социальный пакет'
-    )
-
-    class Meta:
-        verbose_name = 'Социальный пакет'
-        verbose_name_plural = 'Социальные пакеты'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
 class Order(models.Model):
     """Модель Заявка"""
 
@@ -145,12 +160,20 @@ class Order(models.Model):
             )
         ]
     )
+<<<<<<< HEAD
     """2 поле"""
     line_of_buisness = models.ForeignKey(
         LineOfBuisness,
         on_delete=models.CASCADE,
         related_name='orders',
         verbose_name='Сфера деятельности'
+=======
+    line_of_business = models.ForeignKey(
+        LineOfBusiness,
+        on_delete=models.CASCADE,
+        related_name='orders',
+        verbose_name='Сфера'
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
     )
     """3 поле"""
     city = models.ForeignKey(
@@ -167,18 +190,18 @@ class Order(models.Model):
     )
     """5 поле"""
     salary_from = models.PositiveIntegerField(
-        verbose_name='Минимальная зарплата gross(до вычета НДФЛ)',
+        verbose_name='Минимальная зарплата до вычета НДФЛ',
         default=0,
         validators=[
             MinValueValidator(
-                Limits.MIN_SАLARY.value,
+                Limits.MIN_SALARY.value,
                 'Заработная плата по ТК не менее 17 000'
             )
         ]
     )
     """6 поле"""
     salary_to = models.PositiveIntegerField(
-        verbose_name='Максимальная зарплата gross(до вычета НДФЛ)',
+        verbose_name='Максимальная зарплата до вычета НДФЛ',
         default=0,
         validators=[
             MaxValueValidator(
@@ -187,24 +210,33 @@ class Order(models.Model):
             )
         ]
     )
+<<<<<<< HEAD
     """7 поле"""
+=======
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
     start_work_day = models.TimeField(
         verbose_name='Начало рабочего дня',
         null=True,
         blank=True
     )
+<<<<<<< HEAD
     """8 поле"""
     end_work_day = models.TimeField(
         verbose_name='Окончание рабочего дня',
+=======
+    end_work_day = models.TimeField(
+        verbose_name='Конец рабочего дня',
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
         null=True,
         blank=True
     )
     """9 поле"""
     schedule = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
-        choices=SСHEDULE_CHOICES,
+        choices=SCHEDULE_CHOICES,
         verbose_name='График работы'
     )
+<<<<<<< HEAD
     """10 поле"""
     type_employment = models.ForeignKey(
         TypeEmployment,
@@ -224,10 +256,25 @@ class Order(models.Model):
         related_name='packages',
         verbose_name='Социальный пакет',
     )
+=======
+    amount_of_subordinate = models.PositiveIntegerField(
+        verbose_name='Количество подчинённых в управлении',
+        default=0
+    )
+    type_employment = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        choices=EMPLOYMENT_CHOICES,
+        verbose_name='Тип занятости'
+    )
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
     business_trip = models.CharField(
-        verbose_name='Командировка',
+        verbose_name='Командировки',
         choices=BUSINESS_TRIP_CHOICES,
         max_length=Limits.BUSINESS_TRIP_LENGTH.value
+    )
+    amount_of_subordinate = models.PositiveIntegerField(
+        verbose_name='Сотрудников в подчинении',
+        default=0
     )
     features_vacancy = models.TextField(
         verbose_name='Особенности вакансии',
@@ -236,6 +283,11 @@ class Order(models.Model):
         verbose_name='Опыт работы',
         choices=WORK_EXPERIENCE_CHOICES,
         max_length=Limits.WORK_EXPERIENCE_LENGTH.value
+    )
+    skill = models.ManyToManyField(
+        Skill,
+        related_name='skills',
+        verbose_name='Ключевые навыки'
     )
     education = models.CharField(
         verbose_name='Образование',
@@ -247,6 +299,7 @@ class Order(models.Model):
         choices=PORTFOLIO_CHOICES,
         max_length=Limits.PORTFOLIO_LENGTH.value
     )
+<<<<<<< HEAD
     employee_responsibility = models.TextField(
         verbose_name='Обязанности сотрудника'
     )
@@ -255,8 +308,10 @@ class Order(models.Model):
         related_name='skills',
         verbose_name='Ключевые навыки'
     )
+=======
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
     amount_of_employees = models.PositiveIntegerField(
-        verbose_name='Количество сотрудников',
+        verbose_name='Количество сотрудников для поиска',
         default=0,
         validators=[
             MinValueValidator(
@@ -265,26 +320,40 @@ class Order(models.Model):
             )
         ]
     )
+<<<<<<< HEAD
     payment_hr = models.CharField(
         verbose_name='Выплата рекрутеру',
         choices=PAYMENT_HR_CHOICES,
         max_length=100
+=======
+    award_option = models.PositiveIntegerField(
+        verbose_name='Варианты вознаграждения',
+        choices=AWARD_OPTION_CHOICES
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
     )
     award = models.PositiveIntegerField(
-        verbose_name='Вознаграждение за сотрудника',
+        verbose_name='Размер вознаграждения',
         default=0
     )
-    start_interview = models.DateField(
-        verbose_name='Старт собеседований с кандидатом'
-    )
     start_work = models.DateField(
-        verbose_name='Дата вступления сотрудника в должность'
+        verbose_name='Дата вступления в должность'
     )
     format_interview = models.CharField(
         verbose_name='Формат собеседований',
         choices=FORMAT_INTERVIEWS_CHOICES,
         max_length=Limits.INTERVIEW_MAX_LEN.value
     )
+<<<<<<< HEAD
+=======
+    start_interview = models.DateField(
+        verbose_name='Старт собеседований'
+    )
+    amount_of_hr = models.PositiveIntegerField(
+        verbose_name='Количество рекрутеров',
+        choices=AMOUNT_HR_CHOICES,
+        default=1
+    )
+>>>>>>> 3495f3d (Chore: редактирование модели заявки)
     hr_responsibility = models.ManyToManyField(
         HrResponsibility,
         related_name='responsobilities',
@@ -294,15 +363,6 @@ class Order(models.Model):
         HrRequirements,
         related_name='requirements',
         verbose_name='Требования к рекрутеру'
-    )
-    info_candidates = models.PositiveIntegerField(
-        verbose_name='Предоставление данных о кандидатах',
-        choices=INFO_CANDIDATES_CHOICES
-    )
-    payment = models.CharField(
-        verbose_name='Тип оплаты',
-        choices=PAYMENT_CHOICES,
-        max_length=Limits.PAYMENT_LENGTH.value
     )
 
     class Meta:
