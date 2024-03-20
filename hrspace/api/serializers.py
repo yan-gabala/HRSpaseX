@@ -1,4 +1,4 @@
-from orders.models import City, Order, Profession
+from orders.models import City, Order, LineOfBuisness
 from rest_framework import serializers
 
 
@@ -16,8 +16,8 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProfessionSerializer(serializers.ModelSerializer):
+class LineOfBuisnessSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Profession
+        model = LineOfBuisness
         fields = '__all__'

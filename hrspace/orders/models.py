@@ -8,17 +8,17 @@ from core.constants import (ACTIVITY_FORMAT_HR, BENEFITS_PACKAGE_CHOICES,
                             FORMAT_INTERVIEWS_CHOICES,
                             HR_RESPONSIBILITY_CHOICES, INFO_CANDIDATES_CHOICES,
                             PAYMENT_CHOICES, PAYMENT_HR_CHOICES,
-                            PORTFOLIO_CHOICES, PROFESSION_CHOICES,
+                            PORTFOLIO_CHOICES, LINE_OF_BUISNESS_CHOICES,
                             SСHEDULE_CHOICES, WORK_EXPERIENCE_CHOICES,
                             WORK_FORMAT_CHOICES, Limits)
 
 
-class Profession(models.Model):
+class LineOfBuisness(models.Model):
     """Модель Сфера деятельности"""
     name = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
         # поменять на скрипт загрузки из файла в БД #
-        choices=PROFESSION_CHOICES,
+        choices=LINE_OF_BUISNESS_CHOICES,
         verbose_name='Сфера деятельности'
     )
 
@@ -146,8 +146,8 @@ class Order(models.Model):
         ]
     )
     """2 поле"""
-    profession = models.ForeignKey(
-        Profession,
+    line_of_buisness = models.ForeignKey(
+        LineOfBuisness,
         on_delete=models.CASCADE,
         related_name='orders',
         verbose_name='Сфера деятельности'
