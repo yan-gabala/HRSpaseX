@@ -19,8 +19,8 @@ class Limits(IntEnum):
 
 
 ACTIVITY_FORMAT_HR = (
-    (1, 'Только для юридических лиц и ИП'),
-    (2, 'Только для самозанятых и фрилансеров')
+    ('only_legal_entities_and_itn', 'Только для юридических лиц и ИП'),
+    ('only_selfemployed', 'Только для самозанятых и фрилансеров')
 )
 
 AMOUNT_HR_CHOICES = (

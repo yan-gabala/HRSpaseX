@@ -12,9 +12,6 @@ from core.constants import (ACTIVITY_FORMAT_HR, AMOUNT_HR_CHOICES,
                             PORTFOLIO_CHOICES, SCHEDULE_CHOICES,
                             WORK_EXPERIENCE_CHOICES,
                             WORK_FORMAT_CHOICES, Limits)
-from django.core.validators import (MaxValueValidator, MinValueValidator,
-                                    RegexValidator)
-from django.db import models
 
 
 class LineOfBusiness(models.Model):
