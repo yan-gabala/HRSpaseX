@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from orders.models import (City, HrRequirements, HrResponsibility, LineOfBusiness,
                            Order, Skill)
 
@@ -6,21 +7,10 @@ from orders.models import (City, HrRequirements, HrResponsibility, LineOfBusines
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'work_format',
+        'name', 'line_of_business', 'city', 'work_format',
         'salary_from', 'salary_to'
     )
-    list_filter = ('line_of_business', 'city', 'work_format')
-
-    # def get_line_of_business(self, row):
-    #     return ','.join([obj.name for obj in row.line_of_business.all()])
-
-    # get_line_of_business.short_description = 'Сфера'
-
-    # def get_city(self, row):
-    #     return ','.join([obj.name for obj in row.city.all()])
-
-    # get_city.short_description = 'Город'
-    # pass
+    list_filter = ('city', 'line_of_business', 'work_format')
 
 
 admin.site.register(City)
