@@ -2,30 +2,31 @@ from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
 from django.db import models
 
-from core.constants import (ACTIVITY_FORMAT_HR, BENEFITS_PACKAGE_CHOICES,
+from core.constants import (ACTIVITY_FORMAT_HR, AMOUNT_HR_CHOICES,
+                            AWARD_OPTION_CHOICES,
                             BUSINESS_TRIP_CHOICES, CITY_CHOICES,
                             EDUCATION_CHOICES, EMPLOYMENT_CHOICES,
                             FORMAT_INTERVIEWS_CHOICES,
-                            HR_RESPONSIBILITY_CHOICES, INFO_CANDIDATES_CHOICES,
-                            PAYMENT_CHOICES, PAYMENT_HR_CHOICES,
-                            PORTFOLIO_CHOICES, LINE_OF_BUISNESS_CHOICES,
-                            SСHEDULE_CHOICES, WORK_EXPERIENCE_CHOICES,
+                            HR_RESPONSIBILITY_CHOICES,
+                            LINE_OF_BUSINESS_CHOICES,
+                            PORTFOLIO_CHOICES, SCHEDULE_CHOICES,
+                            WORK_EXPERIENCE_CHOICES,
                             WORK_FORMAT_CHOICES, Limits)
 
 
-class LineOfBuisness(models.Model):
-    """Модель Сфера деятельности"""
+class LineOfBusiness(models.Model):
+    """Модель Сфера"""
     name = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
         # поменять на скрипт загрузки из файла в БД #
-        choices=LINE_OF_BUISNESS_CHOICES,
-        verbose_name='Сфера деятельности'
+        choices=LINE_OF_BUSINESS_CHOICES,
+        verbose_name='Сфера'  # У дизайнеров в макете поле названо сфера
     )
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'Сфера деятельности'
-        verbose_name_plural = 'Сферы деятельности'
+        verbose_name = 'Сфера'
+        verbose_name_plural = 'Сферы'
 
     def __str__(self):
         return f'{self.name}'
@@ -44,23 +45,6 @@ class City(models.Model):
         ordering = ('name',)
         verbose_name = 'Город'
         verbose_name_plural = 'Города'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class TypeEmployment(models.Model):
-    """Модель Тип занятости"""
-    name = models.CharField(
-        max_length=Limits.NAME_MAX_LEN.value,
-        choices=EMPLOYMENT_CHOICES,
-        verbose_name='Тип занятости'
-    )
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Тип занятости'
-        verbose_name_plural = 'Типы занятости'
 
     def __str__(self):
         return f'{self.name}'
@@ -85,9 +69,8 @@ class Skill(models.Model):
 
 class HrResponsibility(models.Model):
     """Модель Обязанности рекрутера"""
-    name = models.CharField(
+    name = models.PositiveIntegerField(
         choices=HR_RESPONSIBILITY_CHOICES,
-        max_length=Limits.NAME_MAX_LEN.value,
         verbose_name='Обязанности рекрутера'
     )
 
@@ -103,29 +86,13 @@ class HrRequirements(models.Model):
     """Модель Требования к рекрутеру"""
     name = models.CharField(
         choices=ACTIVITY_FORMAT_HR,
-        verbose_name='Форма деятельности',
-        max_length=Limits.ACTIVITY_MAX_LEN.value
+        max_length=Limits.ACTIVITY_MAX_LEN.value,
+        verbose_name='Требования к рекрутеру'
     )
 
     class Meta:
-        verbose_name = 'Форма деятельности'
-        verbose_name_plural = 'Формы деятельности'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class BenefitsPackage(models.Model):
-    """Модель Социальный пакет"""
-    name = models.CharField(
-        max_length=Limits.NAME_MAX_LEN.value,
-        choices=BENEFITS_PACKAGE_CHOICES,
-        verbose_name='Социальный пакет'
-    )
-
-    class Meta:
-        verbose_name = 'Социальный пакет'
-        verbose_name_plural = 'Социальные пакеты'
+        verbose_name = 'Требование к рекрутеру'
+        verbose_name_plural = 'Требования к рекрутеру'
 
     def __str__(self):
         return f'{self.name}'
@@ -133,8 +100,6 @@ class BenefitsPackage(models.Model):
 
 class Order(models.Model):
     """Модель Заявка"""
-
-    """1 поле"""
     name = models.CharField(
         max_length=Limits.DESIGNATION.value,
         verbose_name='Название вакансии',
@@ -145,40 +110,35 @@ class Order(models.Model):
             )
         ]
     )
-    """2 поле"""
-    line_of_buisness = models.ForeignKey(
-        LineOfBuisness,
+    line_of_business = models.ForeignKey(
+        LineOfBusiness,
         on_delete=models.CASCADE,
         related_name='orders',
-        verbose_name='Сфера деятельности'
+        verbose_name='Сфера'
     )
-    """3 поле"""
     city = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
         related_name='cities',
         verbose_name='Город'
     )
-    """4 поле"""
     work_format = models.CharField(
         verbose_name='Формат работы',
         choices=WORK_FORMAT_CHOICES,
         max_length=Limits.WORK_FORMAT_LENGTH.value
     )
-    """5 поле"""
     salary_from = models.PositiveIntegerField(
-        verbose_name='Минимальная зарплата gross(до вычета НДФЛ)',
+        verbose_name='Минимальная зарплата до вычета НДФЛ',
         default=0,
         validators=[
             MinValueValidator(
-                Limits.MIN_SАLARY.value,
+                Limits.MIN_SALARY.value,
                 'Заработная плата по ТК не менее 17 000'
             )
         ]
     )
-    """6 поле"""
     salary_to = models.PositiveIntegerField(
-        verbose_name='Максимальная зарплата gross(до вычета НДФЛ)',
+        verbose_name='Максимальная зарплата до вычета НДФЛ',
         default=0,
         validators=[
             MaxValueValidator(
@@ -187,55 +147,53 @@ class Order(models.Model):
             )
         ]
     )
-    """7 поле"""
     start_work_day = models.TimeField(
         verbose_name='Начало рабочего дня',
         null=True,
         blank=True
     )
-    """8 поле"""
     end_work_day = models.TimeField(
-        verbose_name='Окончание рабочего дня',
+        verbose_name='Конец рабочего дня',
         null=True,
         blank=True
     )
-    """9 поле"""
     schedule = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
-        choices=SСHEDULE_CHOICES,
+        choices=SCHEDULE_CHOICES,
         verbose_name='График работы'
     )
-    """10 поле"""
-    type_employment = models.ForeignKey(
-        TypeEmployment,
-        on_delete=models.CASCADE,
-        related_name='employments',
-        verbose_name='Тип занятости'
-    )
-    ###########################################
-    #
-    ###########################################
     amount_of_subordinate = models.PositiveIntegerField(
         verbose_name='Количество подчинённых в управлении',
         default=0
     )
-    benefits_package = models.ManyToManyField(
-        BenefitsPackage,
-        related_name='packages',
-        verbose_name='Социальный пакет',
+    type_employment = models.CharField(
+        verbose_name='Тип занятости',
+        max_length=Limits.NAME_MAX_LEN.value,
+        choices=EMPLOYMENT_CHOICES
     )
     business_trip = models.CharField(
-        verbose_name='Командировка',
+        verbose_name='Командировки',
         choices=BUSINESS_TRIP_CHOICES,
         max_length=Limits.BUSINESS_TRIP_LENGTH.value
     )
+    amount_of_subordinate = models.PositiveIntegerField(
+        verbose_name='Сотрудников в подчинении',
+        default=0
+    )
     features_vacancy = models.TextField(
-        verbose_name='Особенности вакансии',
+        verbose_name='Особенности вакансии'
+        # null=True,
+        # blank=True
     )
     work_experience = models.CharField(
         verbose_name='Опыт работы',
         choices=WORK_EXPERIENCE_CHOICES,
         max_length=Limits.WORK_EXPERIENCE_LENGTH.value
+    )
+    skill = models.ManyToManyField(
+        Skill,
+        related_name='skills',
+        verbose_name='Ключевые навыки'
     )
     education = models.CharField(
         verbose_name='Образование',
@@ -247,16 +205,8 @@ class Order(models.Model):
         choices=PORTFOLIO_CHOICES,
         max_length=Limits.PORTFOLIO_LENGTH.value
     )
-    employee_responsibility = models.TextField(
-        verbose_name='Обязанности сотрудника'
-    )
-    skill = models.ManyToManyField(
-        Skill,
-        related_name='skills',
-        verbose_name='Ключевые навыки'
-    )
     amount_of_employees = models.PositiveIntegerField(
-        verbose_name='Количество сотрудников',
+        verbose_name='Количество сотрудников для поиска',
         default=0,
         validators=[
             MinValueValidator(
@@ -265,25 +215,33 @@ class Order(models.Model):
             )
         ]
     )
-    payment_hr = models.CharField(
-        verbose_name='Выплата рекрутеру',
-        choices=PAYMENT_HR_CHOICES,
-        max_length=100
+    award_option = models.PositiveIntegerField(
+        verbose_name='Варианты вознаграждения',
+        choices=AWARD_OPTION_CHOICES,
+        default=1
     )
     award = models.PositiveIntegerField(
-        verbose_name='Вознаграждение за сотрудника',
+        verbose_name='Размер вознаграждения',
         default=0
     )
-    start_interview = models.DateField(
-        verbose_name='Старт собеседований с кандидатом'
-    )
     start_work = models.DateField(
-        verbose_name='Дата вступления сотрудника в должность'
+        verbose_name='Дата вступления в должность'
     )
-    format_interview = models.CharField(
+    format_interview = models.PositiveIntegerField(
         verbose_name='Формат собеседований',
         choices=FORMAT_INTERVIEWS_CHOICES,
-        max_length=Limits.INTERVIEW_MAX_LEN.value
+        default=1
+        # max_length=Limits.INTERVIEW_MAX_LEN.value
+        # null=True,
+        # blank=True
+    )
+    start_interview = models.DateField(
+        verbose_name='Старт собеседований'
+    )
+    amount_of_hr = models.PositiveIntegerField(
+        verbose_name='Количество рекрутеров',
+        choices=AMOUNT_HR_CHOICES,
+        default=1
     )
     hr_responsibility = models.ManyToManyField(
         HrResponsibility,
@@ -294,15 +252,6 @@ class Order(models.Model):
         HrRequirements,
         related_name='requirements',
         verbose_name='Требования к рекрутеру'
-    )
-    info_candidates = models.PositiveIntegerField(
-        verbose_name='Предоставление данных о кандидатах',
-        choices=INFO_CANDIDATES_CHOICES
-    )
-    payment = models.CharField(
-        verbose_name='Тип оплаты',
-        choices=PAYMENT_CHOICES,
-        max_length=Limits.PAYMENT_LENGTH.value
     )
 
     class Meta:
