@@ -72,8 +72,7 @@ class Skill(models.Model):
 
 class HrResponsibility(models.Model):
     """Модель Обязанности рекрутера"""
-    name = models.CharField(  # Поменять на PositiveIntegerField ?
-        max_length=Limits.NAME_MAX_LEN.value,
+    name = models.PositiveIntegerField(
         choices=HR_RESPONSIBILITY_CHOICES,
         verbose_name='Обязанности рекрутера'
     )
@@ -88,14 +87,18 @@ class HrResponsibility(models.Model):
 
 class HrRequirements(models.Model):
     """Модель Требования к рекрутеру"""
-    description = models.TextField(
+    name = models.CharField(
+        choices=ACTIVITY_FORMAT_HR,
+        max_length=Limits.ACTIVITY_MAX_LEN.value,
         verbose_name='Требования к рекрутеру'
     )
-    activity = models.CharField(
-        choices=ACTIVITY_FORMAT_HR,
-        verbose_name='Форма деятельности',
-        max_length=Limits.ACTIVITY_MAX_LEN.value
-    )
+
+    class Meta:
+        verbose_name = 'Требование к рекрутеру'
+        verbose_name_plural = 'Требования к рекрутеру'
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Order(models.Model):
@@ -167,9 +170,9 @@ class Order(models.Model):
         default=0
     )
     type_employment = models.CharField(
+        verbose_name='Тип занятости',
         max_length=Limits.NAME_MAX_LEN.value,
-        choices=EMPLOYMENT_CHOICES,
-        verbose_name='Тип занятости'
+        choices=EMPLOYMENT_CHOICES
     )
     business_trip = models.CharField(
         verbose_name='Командировки',
@@ -181,7 +184,9 @@ class Order(models.Model):
         default=0
     )
     features_vacancy = models.TextField(
-        verbose_name='Особенности вакансии',
+        verbose_name='Особенности вакансии'
+        # null=True,
+        # blank=True
     )
     work_experience = models.CharField(
         verbose_name='Опыт работы',
@@ -215,7 +220,8 @@ class Order(models.Model):
     )
     award_option = models.PositiveIntegerField(
         verbose_name='Варианты вознаграждения',
-        choices=AWARD_OPTION_CHOICES
+        choices=AWARD_OPTION_CHOICES,
+        default=1
     )
     award = models.PositiveIntegerField(
         verbose_name='Размер вознаграждения',
@@ -224,10 +230,13 @@ class Order(models.Model):
     start_work = models.DateField(
         verbose_name='Дата вступления в должность'
     )
-    format_interview = models.CharField(
+    format_interview = models.PositiveIntegerField(
         verbose_name='Формат собеседований',
         choices=FORMAT_INTERVIEWS_CHOICES,
-        max_length=Limits.INTERVIEW_MAX_LEN.value
+        default=1
+        # max_length=Limits.INTERVIEW_MAX_LEN.value
+        # null=True,
+        # blank=True
     )
     start_interview = models.DateField(
         verbose_name='Старт собеседований'
