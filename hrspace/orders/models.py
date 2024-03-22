@@ -162,10 +162,6 @@ class Order(models.Model):
         choices=SCHEDULE_CHOICES,
         verbose_name='График работы'
     )
-    amount_of_subordinate = models.PositiveIntegerField(
-        verbose_name='Количество подчинённых в управлении',
-        default=0
-    )
     type_employment = models.CharField(
         verbose_name='Тип занятости',
         max_length=Limits.NAME_MAX_LEN.value,
