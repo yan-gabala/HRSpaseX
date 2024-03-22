@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api.apps.ApiConfig',
     'orders.apps.OrdersConfig',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,21 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'HRspace Documentation API',
+    'DESCRIPTION': ('В этом описании API представлен обзор доступных конечных точек,'
+                    'форматов запросов и ответов, а также примеры эффективного использования API HRspace.'),
+    'VERSION': '0.0.1',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'filter': True,
+    },
+}
 
 
 LANGUAGE_CODE = 'ru-ru'
