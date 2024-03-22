@@ -84,6 +84,9 @@ SPECTACULAR_SETTINGS = {
                     'форматов запросов и ответов, а также примеры эффективного использования API HRspace.'),
     'VERSION': '0.0.1',
     'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'filter': True,
+    },
 }
 
 
