@@ -3,7 +3,7 @@ name: hr_2
 on:
   push:
     branches:
-      - s/feat/23_deploy
+      - s/feat/23_deploy_off
 
 jobs:
   tests:
