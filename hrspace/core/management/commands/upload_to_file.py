@@ -66,7 +66,7 @@ class Command(BaseCommand):
         file.close()
         self.stdout.write(
             colored.green('+++ Новый файл успешно создан'))
-        return file_path, mimetype
+        return file_path, mimetype.lower()
 
     def get_filename(self, model, model_to_filename):
         filename = model_to_filename.get(model.__name__)
