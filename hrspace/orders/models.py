@@ -4,7 +4,7 @@ from django.db import models
 
 from core.constants import (ACTIVITY_FORMAT_HR, AMOUNT_HR_CHOICES,
                             AWARD_OPTION_CHOICES,
-                            BUSINESS_TRIP_CHOICES, CITY_CHOICES,
+                            BUSINESS_TRIP_CHOICES,
                             EDUCATION_CHOICES, EMPLOYMENT_CHOICES,
                             FORMAT_INTERVIEWS_CHOICES,
                             HR_RESPONSIBILITY_CHOICES,
@@ -18,9 +18,8 @@ class LineOfBusiness(models.Model):
     """Модель Сфера"""
     name = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
-        # поменять на скрипт загрузки из файла в БД #
         choices=LINE_OF_BUSINESS_CHOICES,
-        verbose_name='Сфера'  # У дизайнеров в макете поле названо сфера
+        verbose_name='Сфера'
     )
 
     class Meta:
@@ -36,8 +35,8 @@ class City(models.Model):
     """Модель Город"""
     name = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
-        # добавить скрипт загрузки данных из файла в БД #
-        choices=CITY_CHOICES,
+        blank=False,
+        unique=True,
         verbose_name='Город'
     )
 
@@ -54,7 +53,6 @@ class Skill(models.Model):
     """Модель Ключевые навыки"""
     name = models.CharField(
         max_length=Limits.DESIGNATION.value,
-        # добавить скрипт загрузки данных из файла в БД #
         verbose_name='Ключевые навыки'
     )
 
