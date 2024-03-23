@@ -178,17 +178,15 @@ class Order(models.Model):
     )
     features_vacancy = models.TextField(
         verbose_name='Особенности вакансии'
-        # null=True,
-        # blank=True
     )
     work_experience = models.CharField(
         verbose_name='Опыт работы',
         choices=WORK_EXPERIENCE_CHOICES,
         max_length=Limits.WORK_EXPERIENCE_LENGTH.value
     )
-    skill = models.ManyToManyField(
+    skills = models.ManyToManyField(
         Skill,
-        related_name='skills',
+        related_name='orders',
         verbose_name='Ключевые навыки'
     )
     education = models.CharField(
@@ -227,9 +225,6 @@ class Order(models.Model):
         verbose_name='Формат собеседований',
         choices=FORMAT_INTERVIEWS_CHOICES,
         default=1
-        # max_length=Limits.INTERVIEW_MAX_LEN.value
-        # null=True,
-        # blank=True
     )
     start_interview = models.DateField(
         verbose_name='Старт собеседований'
@@ -239,10 +234,10 @@ class Order(models.Model):
         choices=AMOUNT_HR_CHOICES,
         default=1
     )
-    hr_responsibility = models.ManyToManyField(
+    hr_responsibilities = models.ManyToManyField(
         HrResponsibility,
-        related_name='responsobilities',
-        verbose_name='Обязанности рекрутера',
+        related_name='responsibilities',
+        verbose_name='Обязанности рекрутера'
     )
     hr_requirements = models.ManyToManyField(
         HrRequirements,
