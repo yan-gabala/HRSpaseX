@@ -7,14 +7,14 @@ class CitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = City
-        fields = '__all__'
+        fields = ('id', 'name')
 
 
 class LineOfBusinessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LineOfBusiness
-        fields = '__all__'
+        fields = ('__all__')
 
 
 class OrderSerializer(serializers.ModelSerializer):
