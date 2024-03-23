@@ -186,10 +186,12 @@ class Order(models.Model):
         choices=WORK_EXPERIENCE_CHOICES,
         max_length=Limits.WORK_EXPERIENCE_LENGTH.value
     )
-    skill = models.ManyToManyField(
+    skills = models.ManyToManyField(
         Skill,
-        related_name='skills',
-        verbose_name='Ключевые навыки'
+        through='OrderSkills',
+        related_name='orders',
+        verbose_name='Ключевые навыки',
+        through_fields=('order', 'skill')
     )
     education = models.CharField(
         verbose_name='Образование',
@@ -239,15 +241,19 @@ class Order(models.Model):
         choices=AMOUNT_HR_CHOICES,
         default=1
     )
-    hr_responsibility = models.ManyToManyField(
+    hr_responsibilities = models.ManyToManyField(
         HrResponsibility,
-        related_name='responsobilities',
+        through='OrderHrResponsibilities',
+        related_name='responsibilities',
         verbose_name='Обязанности рекрутера',
+        through_fields=('order', 'hr_responsibility')
     )
     hr_requirements = models.ManyToManyField(
         HrRequirements,
+        through='OrderHrRequirements',
         related_name='requirements',
-        verbose_name='Требования к рекрутеру'
+        verbose_name='Требования к рекрутеру',
+        through_fields=('order', 'hr_requirement')
     )
 
     class Meta:
@@ -256,3 +262,69 @@ class Order(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class OrderSkills(models.Model):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='order_skills',
+        verbose_name='ID заявки'
+    )
+    skill = models.ForeignKey(
+        Skill,
+        on_delete=models.CASCADE,
+        related_name='order_skills',
+        verbose_name='ID навыка'
+    )
+
+    class Meta:
+        verbose_name = 'Заявка-Навык'
+        verbose_name_plural = 'Заявка-Навыки'
+
+    def __str__(self):
+        return f'{self.order} - {self.skill}'
+
+
+class OrderHrResponsibilities(models.Model):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='order_hr_responsibilities',
+        verbose_name='ID заявки'
+    )
+    hr_responsibility = models.ForeignKey(
+        HrResponsibility,
+        on_delete=models.CASCADE,
+        related_name='order_hr_responsibilities',
+        verbose_name='ID обязанности'
+    )
+
+    class Meta:
+        verbose_name = 'Заявка-Обязанность'
+        verbose_name_plural = 'Заявка-Обязанности'
+
+    def __str__(self):
+        return f'{self.order} - {self.hr_responsibility}'
+
+
+class OrderHrRequirements(models.Model):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='order_hr_requirements',
+        verbose_name='ID заявки'
+    )
+    hr_requirement = models.ForeignKey(
+        HrRequirements,
+        on_delete=models.CASCADE,
+        related_name='order_hr_requirements',
+        verbose_name='ID требования'
+    )
+
+    class Meta:
+        verbose_name = 'Заявка-Требование'
+        verbose_name_plural = 'Заявка-Требования'
+
+    def __str__(self):
+        return f'{self.order} - {self.hr_requirement}'

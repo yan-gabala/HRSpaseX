@@ -1,0 +1,126 @@
+from django.test import TestCase
+
+from orders.models import (City, Order, HrResponsibility, HrRequirements,
+                           LineOfBusiness, OrderHrRequirements, OrderSkills,
+                           OrderHrResponsibilities, Skill)
+
+
+class OrderTests(TestCase):
+
+    def setUp(self):
+        self.city = City.objects.create(name='tver')
+        self.line_of_business = LineOfBusiness.objects.create(name='python_dev')
+        self.skill = Skill.objects.create(name='тестовый навык')
+        self.hr_responsibility = HrResponsibility.objects.create(name=1)
+        self.hr_requirement = HrRequirements.objects.create(name='тестовое требование')
+
+        self.order = Order.objects.create(
+            name='Тестовое название вакансии',
+            line_of_business=self.line_of_business,
+            city=self.city,
+            work_format='office',
+            salary_from=40000,
+            salary_to=50000,
+            start_work_day='09:00:00',
+            end_work_day='18:00:00',
+            schedule='shift work',
+            type_employment='partial',
+            business_trip='no',
+            amount_of_subordinate=0,
+            features_vacancy='тест особенности вакансии',
+            work_experience='from_one_to_three_years',
+            education='higher',
+            portfolio='not_required',
+            amount_of_employees=1,
+            award_option=1,
+            award=20000,
+            start_work='2024-03-31',
+            format_interview=1,
+            start_interview='2024-03-25',
+            amount_of_hr=1
+        )
+        self.order_skill = OrderSkills.objects.create(
+            order=self.order,
+            skill=self.skill
+        )
+        self.order_hr_responsibility = OrderHrResponsibilities.objects.create(
+            order=self.order,
+            hr_responsibility=self.hr_responsibility
+        )
+        self.order_hr_requirement = OrderHrRequirements.objects.create(
+            order=self.order,
+            hr_requirement=self.hr_requirement
+        )
+
+    def test_order(self):
+        """Проверка полей модели Заявка"""
+        self.assertEqual(self.order.name, 'Тестовое название вакансии')
+        self.assertEqual(self.order.line_of_business, self.line_of_business)
+        self.assertEqual(self.order.city, self.city)
+        self.assertEqual(self.order.work_format, 'office')
+        self.assertEqual(self.order.salary_from, 40000)
+        self.assertEqual(self.order.salary_to, 50000)
+        self.assertEqual(self.order.start_work_day, '09:00:00')
+        self.assertEqual(self.order.end_work_day, '18:00:00')
+        self.assertEqual(self.order.schedule, 'shift work')
+        self.assertEqual(self.order.type_employment, 'partial')
+        self.assertEqual(self.order.business_trip, 'no')
+        self.assertEqual(self.order.amount_of_subordinate, 0)
+        self.assertEqual(self.order.features_vacancy, 'тест особенности вакансии')
+        self.assertEqual(self.order.work_experience, 'from_one_to_three_years')
+        self.assertEqual(self.order.education, 'higher')
+        self.assertEqual(self.order.portfolio, 'not_required')
+        self.assertEqual(self.order.amount_of_employees, 1)
+        self.assertEqual(self.order.award_option, 1)
+        self.assertEqual(self.order.award, 20000)
+        self.assertEqual(self.order.start_work, '2024-03-31')
+        self.assertEqual(self.order.format_interview, 1)
+        self.assertEqual(self.order.start_interview, '2024-03-25')
+        self.assertEqual(self.order.amount_of_hr, 1)
+
+    def test_city(self):
+        """Проверка поля модели Город"""
+        self.assertEqual(self.city.name, 'tver')
+
+    def test_line_of_business(self):
+        """Проверка поля модели Сфера"""
+        self.assertEqual(self.line_of_business.name, 'python_dev')
+
+    def test_skill(self):
+        """Проверка поля модели Ключевые навыки"""
+        self.assertEqual(self.skill.name, 'тестовый навык')
+
+    def test_hr_responsibility(self):
+        """Проверка поля модели Обязанности рекрутера"""
+        self.assertEqual(self.hr_responsibility.name, 1)
+
+    def test_hr_requirement(self):
+        """Проверка поля модели Требования к рекрутеру"""
+        self.assertEqual(self.hr_requirement.name, 'тестовое требование')
+
+    def test_models_have_correct_object_names(self):
+        """Проверка корректности строкового метода моделей"""
+        model_str = {
+            self.city: self.city.name,
+            self.line_of_business: self.line_of_business.name,
+            self.skill: self.skill.name,
+            self.order: self.order.name
+        }
+        for model, expected_value in model_str.items():
+            with self.subTest(model=model):
+                self.assertEqual(expected_value, str(model))
+
+    def test_relationships(self):
+        """Проверка отношений в моделях"""
+        self.assertEqual(self.order_skill.order, self.order)
+        self.assertEqual(self.order_skill.skill, self.skill)
+        self.assertEqual(self.order_hr_responsibility.order, self.order)
+        self.assertEqual(
+            self.order_hr_responsibility.hr_responsibility,
+            self.hr_responsibility
+        )
+        self.assertEqual(self.order_hr_requirement.order, self.order)
+        self.assertEqual(
+            self.order_hr_requirement.hr_requirement,
+            self.hr_requirement
+        )
