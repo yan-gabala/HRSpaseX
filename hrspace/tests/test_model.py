@@ -1,8 +1,7 @@
 from django.test import TestCase
 
 from orders.models import (City, Order, HrResponsibility, HrRequirements,
-                           LineOfBusiness, OrderHrRequirements, OrderSkills,
-                           OrderHrResponsibilities, Skill)
+                           LineOfBusiness, Skill)
 
 
 class OrderTests(TestCase):
@@ -38,18 +37,6 @@ class OrderTests(TestCase):
             format_interview=1,
             start_interview='2024-03-25',
             amount_of_hr=1
-        )
-        self.order_skill = OrderSkills.objects.create(
-            order=self.order,
-            skill=self.skill
-        )
-        self.order_hr_responsibility = OrderHrResponsibilities.objects.create(
-            order=self.order,
-            hr_responsibility=self.hr_responsibility
-        )
-        self.order_hr_requirement = OrderHrRequirements.objects.create(
-            order=self.order,
-            hr_requirement=self.hr_requirement
         )
 
     def test_order(self):
@@ -109,18 +96,3 @@ class OrderTests(TestCase):
         for model, expected_value in model_str.items():
             with self.subTest(model=model):
                 self.assertEqual(expected_value, str(model))
-
-    def test_relationships(self):
-        """Проверка отношений в моделях"""
-        self.assertEqual(self.order_skill.order, self.order)
-        self.assertEqual(self.order_skill.skill, self.skill)
-        self.assertEqual(self.order_hr_responsibility.order, self.order)
-        self.assertEqual(
-            self.order_hr_responsibility.hr_responsibility,
-            self.hr_responsibility
-        )
-        self.assertEqual(self.order_hr_requirement.order, self.order)
-        self.assertEqual(
-            self.order_hr_requirement.hr_requirement,
-            self.hr_requirement
-        )
