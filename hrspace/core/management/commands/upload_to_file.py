@@ -79,6 +79,14 @@ class Command(BaseCommand):
                 with open(file_path, 'a+', newline='', encoding='utf-8') as file:
                     writer = csv.writer(file)
                     writer.writerows(data)
+            if mimetype == 'json':
+                output = []
+                with open(file_path, 'a+', newline='', encoding='utf-8') as file:
+                    for obj in data:
+                        obj_to_write = {"id": int(obj[0]), "city": obj[1]}
+                        output.append(obj_to_write)
+                    json.dump(output, file, indent=2, ensure_ascii=False)
+
         if model.__name__ == 'Skill':
             ...
         if model.__name__ == 'LineOfBusiness':
