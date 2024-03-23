@@ -80,7 +80,11 @@ class Command(BaseCommand):
             if mimetype == 'json':
                 self.save_to_json(data, file_path)
         if model.__name__ == 'Skill':
-            ...
+            data = self.get_skills()
+            if mimetype == 'csv':
+                self.save_to_csv(data, file_path)
+            if mimetype == 'json':
+                self.save_to_json(data, file_path)
         if model.__name__ == 'LineOfBusiness':
             data = self.get_line_of_business()
             if mimetype == 'csv':
@@ -116,6 +120,18 @@ class Command(BaseCommand):
         for k in js_object:
             line_of_business.append([k['id'], k['name']])
         return line_of_business
+
+    def get_skills(self):
+        params = {'text': input('Введите запрос: ')}
+        print(params)
+        response = requests.get(f'{API}suggests/skill_set/', params=params)
+        data = response.content.decode()
+        response.close()
+        js_object = json.loads(data)
+        skills = []
+        for k in js_object['items']:
+            skills.append([k['id'], k['text']])
+        return skills
 
     def save_to_csv(self, data, file_path):
         with open(file_path, 'a+', newline='', encoding='utf-8') as file:
