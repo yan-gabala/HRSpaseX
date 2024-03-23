@@ -29,7 +29,7 @@ class Command(BaseCommand):
     def check_model(self, model):
         model_list = apps.get_models()
         for ex_model in model_list:
-            if ex_model.__name__ == model.capitalize():
+            if ex_model.__name__.lower() == model.lower():
                 self.stdout.write(
                     colored.green('+++ Проверка имени Модели успешно завершена...'))
                 return ex_model
@@ -76,13 +76,21 @@ class Command(BaseCommand):
         if model.__name__ == 'City':
             data = self.get_areas()
             if mimetype == 'csv':
-                with open(file_path, 'a+', newline='', encoding='utf-8') as file:
-                    writer = csv.writer(file)
-                    writer.writerows(data)
+                self.save_to_csv(data, file_path)
+            if mimetype == 'json':
+                self.save_to_json(data, file_path)
         if model.__name__ == 'Skill':
-            ...
+            data = self.get_skills()
+            if mimetype == 'csv':
+                self.save_to_csv(data, file_path)
+            if mimetype == 'json':
+                self.save_to_json(data, file_path)
         if model.__name__ == 'LineOfBusiness':
-            ...
+            data = self.get_line_of_business()
+            if mimetype == 'csv':
+                self.save_to_csv(data, file_path)
+            if mimetype == 'json':
+                self.save_to_json(data, file_path)
 
     def get_areas(self):
         response = requests.get(f'{API}/areas')
@@ -102,3 +110,45 @@ class Command(BaseCommand):
                         areas.append([k['areas'][i]['id'],
                                       k['areas'][i]['name']])
         return areas
+
+    def get_line_of_business(self):
+        response = requests.get(f'{API}salary_statistics/dictionaries/salary_industries')
+        data = response.content.decode()
+        response.close()
+        js_object = json.loads(data)
+        line_of_business = []
+        for k in js_object:
+            line_of_business.append([k['id'], k['name']])
+        return line_of_business
+
+    def get_skills(self):
+        params = {'text': input('Введите запрос: ')}
+        response = requests.get(f'{API}suggests/skill_set/', params=params)
+        data = response.content.decode()
+        response.close()
+        js_object = json.loads(data)
+        skills = []
+        for k in js_object['items']:
+            skills.append([k['id'], k['text']])
+        return skills
+
+    def save_to_csv(self, data, file_path):
+        with open(file_path, 'a+', newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
+            writer.writerows(data)
+        self.stdout.write(
+            colored.green('+++ Запись прошла успешно'))
+        self.stdout.write(
+            colored.green(f'{file_path}'))
+
+    def save_to_json(self, data, file_path):
+        output = []
+        with open(file_path, 'a+', newline='', encoding='utf-8') as file:
+            for obj in data:
+                obj_to_write = {"id": int(obj[0]), "name": obj[1]}
+                output.append(obj_to_write)
+            json.dump(output, file, indent=2, ensure_ascii=False)
+        self.stdout.write(
+            colored.green('+++ Запись прошла успешно'))
+        self.stdout.write(
+            colored.green(f'{file_path}'))
