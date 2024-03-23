@@ -4,17 +4,21 @@ from orders.models import City, LineOfBusiness, Order
 
 
 class CitySerializer(serializers.ModelSerializer):
+    name = serializers.CharField(unique=True)
 
     class Meta:
         model = City
-        fields = '__all__'
+        fields = ('id', 'name')
+
+    def validate_name(self, name):
+        ...
 
 
 class LineOfBusinessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LineOfBusiness
-        fields = '__all__'
+        fields = ('__all__')
 
 
 class OrderSerializer(serializers.ModelSerializer):
