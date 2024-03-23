@@ -36,11 +36,6 @@ BUSINESS_TRIP_CHOICES = (
     ('sometimes', 'Иногда')
 )
 
-CITY_CHOICES = (
-    ('tver', 'Тверь'),
-    ('pskov', 'Псков')
-)
-
 EDUCATION_CHOICES = (
     ('higher', 'Высшее'),
     ('secondary_special', 'Среднее специальное'),
