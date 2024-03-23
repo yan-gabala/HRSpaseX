@@ -123,7 +123,6 @@ class Command(BaseCommand):
 
     def get_skills(self):
         params = {'text': input('Введите запрос: ')}
-        print(params)
         response = requests.get(f'{API}suggests/skill_set/', params=params)
         data = response.content.decode()
         response.close()
