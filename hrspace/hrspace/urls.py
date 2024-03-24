@@ -6,4 +6,3 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('', admin.site.urls),
 ]
-

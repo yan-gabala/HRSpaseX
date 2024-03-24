@@ -22,9 +22,9 @@ services:
       - db
 
   nginx:
-    container_name: nginx_hr
+    container_name: nginx
     env_file: .env
-    image: devinse/nginx_hr
+    image: devinse/nginx
     restart: always
     ports:
       - 80:80
@@ -32,4 +32,3 @@ services:
       - backend
     volumes:
       - static:/etc/nginx/html/static/
-
