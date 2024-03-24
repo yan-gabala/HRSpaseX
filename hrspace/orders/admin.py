@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from orders.models import (City, HrRequirements, HrResponsibility, LineOfBusiness,
-                           Order, Skill)
+from orders.models import (City, LineOfBusiness, Order, Skill)
 
 
 @admin.register(Order)
@@ -14,7 +13,5 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(City)
-admin.site.register(HrRequirements)
-admin.site.register(HrResponsibility)
 admin.site.register(LineOfBusiness)
 admin.site.register(Skill)
