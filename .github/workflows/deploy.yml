@@ -95,7 +95,4 @@ jobs:
           sudo echo DB_PORT=${{ secrets.DB_PORT }} >> .env
           sudo echo SECRET_KEY='${{ secrets.SECRET_KEY }}' >> .env
           sudo echo DEBUG='${{ secrets.DEBUG }}' >> .env
-          sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/backend_hr
           sudo docker compose up -d
-          sudo docker compose exec -T backend python manage.py migrate
-          sudo docker compose exec -T backend python manage.py collectstatic --no-input
