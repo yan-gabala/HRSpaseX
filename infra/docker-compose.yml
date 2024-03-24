@@ -24,7 +24,7 @@ services:
   nginx:
     container_name: nginx
     env_file: .env
-    image: devinse/nginx
+    image: nginx
     restart: always
     ports:
       - 80:80
