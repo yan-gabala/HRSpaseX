@@ -18,11 +18,6 @@ class Limits(IntEnum):
     INTERVIEW_MAX_LEN = 100
 
 
-ACTIVITY_FORMAT_HR = (
-    ('only_legal_entities_and_itn', 'Только для юридических лиц и ИП'),
-    ('only_selfemployed', 'Только для самозанятых и фрилансеров')
-)
-
 AMOUNT_HR_CHOICES = (
     (1, '1'),
     (2, '2'),
@@ -64,14 +59,6 @@ FORMAT_INTERVIEWS_CHOICES = (
     (2, 'С кандидатами, прошедшими предварительный отбор')
 )
 
-HR_RESPONSIBILITY_CHOICES = (
-    (1, 'Подбор кандидатов'),
-    (2, 'Организация собеседований'),
-    (3, 'Проведение собеседований'),
-    (4, 'Запрос рекомендаций'),
-    (5, 'Отправка тестового задания')
-)
-
 INFO_CANDIDATES_CHOICES = (
     (1, 'Резюме без предварительного собеседования'),
     (2, 'Резюме кандидатов с проведенными первичными интервью')
@@ -95,6 +82,14 @@ SCHEDULE_CHOICES = (
     ('flexible schedule', 'Гибкий график'),
     ('shift work', 'Сменный график'),
     ('watch', 'Вахтовый метод'),
+)
+
+SKILL_CHOICES = (
+    ('django', 'Django'),
+    ('python', 'Python'),
+    ('api', 'API'),
+    ('tax_reporting', 'Налоговая отчетность'),
+    ('financial_accounting', 'Бухгалтерский учёт')
 )
 
 WORK_EXPERIENCE_CHOICES = (

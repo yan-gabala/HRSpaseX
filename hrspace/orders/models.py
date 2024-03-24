@@ -2,15 +2,14 @@ from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
 from django.db import models
 
-from core.constants import (ACTIVITY_FORMAT_HR, AMOUNT_HR_CHOICES,
+from core.constants import (AMOUNT_HR_CHOICES,
                             AWARD_OPTION_CHOICES,
                             BUSINESS_TRIP_CHOICES, CITY_CHOICES,
                             EDUCATION_CHOICES, EMPLOYMENT_CHOICES,
                             FORMAT_INTERVIEWS_CHOICES,
-                            HR_RESPONSIBILITY_CHOICES,
                             LINE_OF_BUSINESS_CHOICES,
                             PORTFOLIO_CHOICES, SCHEDULE_CHOICES,
-                            WORK_EXPERIENCE_CHOICES,
+                            SKILL_CHOICES, WORK_EXPERIENCE_CHOICES,
                             WORK_FORMAT_CHOICES, Limits)
 
 
@@ -20,7 +19,7 @@ class LineOfBusiness(models.Model):
         max_length=Limits.NAME_MAX_LEN.value,
         # поменять на скрипт загрузки из файла в БД #
         choices=LINE_OF_BUSINESS_CHOICES,
-        verbose_name='Сфера'  # У дизайнеров в макете поле названо сфера
+        verbose_name='Сфера'
     )
 
     class Meta:
@@ -53,7 +52,8 @@ class City(models.Model):
 class Skill(models.Model):
     """Модель Ключевые навыки"""
     name = models.CharField(
-        max_length=Limits.DESIGNATION.value,
+        max_length=Limits.NAME_MAX_LEN.value,
+        choices=SKILL_CHOICES,
         # добавить скрипт загрузки данных из файла в БД #
         verbose_name='Ключевые навыки'
     )
@@ -62,37 +62,6 @@ class Skill(models.Model):
         ordering = ('name',)
         verbose_name = 'Ключевой навык'
         verbose_name_plural = 'Ключевые навыки'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class HrResponsibility(models.Model):
-    """Модель Обязанности рекрутера"""
-    name = models.PositiveIntegerField(
-        choices=HR_RESPONSIBILITY_CHOICES,
-        verbose_name='Обязанности рекрутера'
-    )
-
-    class Meta:
-        verbose_name = 'Обязанность рекрутера'
-        verbose_name_plural = 'Обязанности рекрутера'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class HrRequirements(models.Model):
-    """Модель Требования к рекрутеру"""
-    name = models.CharField(
-        choices=ACTIVITY_FORMAT_HR,
-        max_length=Limits.ACTIVITY_MAX_LEN.value,
-        verbose_name='Требования к рекрутеру'
-    )
-
-    class Meta:
-        verbose_name = 'Требование к рекрутеру'
-        verbose_name_plural = 'Требования к рекрутеру'
 
     def __str__(self):
         return f'{self.name}'
@@ -184,7 +153,7 @@ class Order(models.Model):
         choices=WORK_EXPERIENCE_CHOICES,
         max_length=Limits.WORK_EXPERIENCE_LENGTH.value
     )
-    skills = models.ManyToManyField(
+    skill = models.ManyToManyField(
         Skill,
         related_name='orders',
         verbose_name='Ключевые навыки'
@@ -234,15 +203,36 @@ class Order(models.Model):
         choices=AMOUNT_HR_CHOICES,
         default=1
     )
-    hr_responsibilities = models.ManyToManyField(
-        HrResponsibility,
-        related_name='responsibilities',
-        verbose_name='Обязанности рекрутера'
+    hr_responsibility1 = models.BooleanField(
+        verbose_name='Подбор кандидатов',
+        default=False
     )
-    hr_requirements = models.ManyToManyField(
-        HrRequirements,
-        related_name='requirements',
+    hr_responsibility2 = models.BooleanField(
+        verbose_name='Организация собеседований',
+        default=False
+    )
+    hr_responsibility3 = models.BooleanField(
+        verbose_name='Проведение собеседований',
+        default=False
+    )
+    hr_responsibility4 = models.BooleanField(
+        verbose_name='Запрос рекомендаций',
+        default=False
+    )
+    hr_responsibility5 = models.BooleanField(
+        verbose_name='Отправка тестового задания',
+        default=False
+    )
+    hr_requirements = models.TextField(
         verbose_name='Требования к рекрутеру'
+    )
+    hr_requirements1 = models.BooleanField(
+        verbose_name='Только для юридических лиц и ИП',
+        default=False
+    )
+    hr_requirements2 = models.BooleanField(
+        verbose_name='Только для самозанятых и фрилансеров',
+        default=False
     )
 
     class Meta:
