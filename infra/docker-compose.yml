@@ -24,7 +24,7 @@ services:
   nginx:
     container_name: nginx
     env_file: .env
-    image: nginx_vi
+    image: nginx_hr
     restart: always
     ports:
       - 80:80
