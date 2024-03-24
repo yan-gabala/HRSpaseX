@@ -24,7 +24,7 @@ services:
   nginx:
     container_name: nginx
     env_file: .env
-    image: nginx
+    image: nginx_vi
     restart: always
     ports:
       - 80:80
@@ -32,4 +32,3 @@ services:
       # - backend
     volumes:
       - static:/etc/nginx/html/static/
-

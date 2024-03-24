@@ -51,13 +51,13 @@ jobs:
           # push: true
           # tags: ${{ secrets.DOCKER_USERNAME }}/backend_hr:latest
 
-      # - name: push nginx to Docker Hub
-        # uses: docker/build-push-action@v4
-        # with:
-          # context: ./infra
-          # file: ./infra/Dockerfile
-          # push: true
-          # tags: ${{ secrets.DOCKER_USERNAME }}/nginx_hr:latest
+      - name: push nginx to Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          context: ./infra
+          file: ./infra/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/nginx_vi:latest
 
   deploy:
     if: github.ref == 'refs/heads/s/feat/23_deploy'
