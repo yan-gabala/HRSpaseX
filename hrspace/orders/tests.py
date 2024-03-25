@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .models import City, Order, LineOfBusiness, Skill
+from orders.models import City, Order, LineOfBusiness, Skill
 
 
 class OrderTests(TestCase):
@@ -41,7 +41,7 @@ class OrderTests(TestCase):
             hr_responsibility5=False,
             hr_requirements='Требования к рекрутеру',
             hr_requirements1=True,
-            hr_requirements2=False,
+            hr_requirements2=False
         )
 
     def test_order(self):
@@ -104,3 +104,46 @@ class OrderTests(TestCase):
         for model, expected_value in model_str.items():
             with self.subTest(model=model):
                 self.assertEqual(expected_value, str(model))
+
+    def test_title_label(self):
+        """Проверка заполнения verbose_name"""
+        field_verboses = {
+            'name': 'Название вакансии',
+            'line_of_business': 'Сфера',
+            'city': 'Город',
+            'work_format': 'Формат работы',
+            'salary_from': 'Минимальная зарплата до вычета НДФЛ',
+            'salary_to': 'Максимальная зарплата до вычета НДФЛ',
+            'start_work_day': 'Начало рабочего дня',
+            'end_work_day': 'Конец рабочего дня',
+            'schedule': 'График работы',
+            'type_employment': 'Тип занятости',
+            'business_trip': 'Командировки',
+            'amount_of_subordinate': 'Сотрудников в подчинении',
+            'features_vacancy': 'Особенности вакансии',
+            'work_experience': 'Опыт работы',
+            'skill': 'Ключевые навыки',
+            'education': 'Образование',
+            'portfolio': 'Портфолио',
+            'amount_of_employees': 'Количество сотрудников для поиска',
+            'award_option': 'Варианты вознаграждения',
+            'award': 'Размер вознаграждения',
+            'start_work': 'Дата вступления в должность',
+            'format_interview': 'Формат собеседований',
+            'start_interview': 'Старт собеседований',
+            'amount_of_hr': 'Количество рекрутеров',
+            'hr_responsibility1': 'Подбор кандидатов',
+            'hr_responsibility2': 'Организация собеседований',
+            'hr_responsibility3': 'Проведение собеседований',
+            'hr_responsibility4': 'Запрос рекомендаций',
+            'hr_responsibility5': 'Отправка тестового задания',
+            'hr_requirements': 'Требования к рекрутеру',
+            'hr_requirements1': 'Только для юридических лиц и ИП',
+            'hr_requirements2': 'Только для самозанятых и фрилансеров'
+        }
+        for field, expected_value in field_verboses.items():
+            with self.subTest(field=field):
+                error_name = f'Поле {field} ожидало значение {expected_value}'
+                self.assertEqual(
+                    self.order._meta.get_field(field).verbose_name,
+                    expected_value, error_name)
