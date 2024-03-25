@@ -1,0 +1,34 @@
+version: '3'
+
+volumes:
+  pg_data:
+  static:
+
+services:
+  db:
+    image: postgres:13.10
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend_hr
+    image: devinse/backend_hr
+    restart: always
+    env_file: .env
+    volumes:
+      - static:/static/
+    depends_on:
+      - db
+
+  nginx:
+    container_name: nginx
+    env_file: .env
+    image: devinse/nginx_hr
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+    volumes:
+      - static:/etc/nginx/html/static/
