@@ -4,7 +4,7 @@ from orders.models import City, LineOfBusiness, Order
 
 
 class CitySerializer(serializers.ModelSerializer):
-    name = serializers.CharField(unique=True)
+    name = serializers.CharField()
 
     class Meta:
         model = City
