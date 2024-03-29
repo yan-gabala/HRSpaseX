@@ -34,6 +34,10 @@ class OrderSerializer(serializers.ModelSerializer):
     award = serializers.StringRelatedField()
     format_interview = serializers.StringRelatedField()
     amount_of_hr = serializers.StringRelatedField()
+    start_work_day = serializers.TimeField(format='%#H.%M')
+    end_work_day = serializers.TimeField(format='%#H.%M')
+    start_work = serializers.DateField(format='%d.%m.%Y')
+    start_interview = serializers.DateField(format='%d.%m.%Y')
 
     class Meta:
         model = Order
