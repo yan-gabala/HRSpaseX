@@ -1,4 +1,4 @@
-# Backend
+# HRSpaceX
 ![Лицензия](https://img.shields.io/github/license/HRSpaceX/backend)
 ![Code Quality](https://github.com/HRSpaceX/backend/actions/workflows/code_quality.yml/badge.svg?branch=dev)
 ![DRF](https://pypi-camo.freetls.fastly.net/18c2771271928b1071e8d436680f9a0abf272294/68747470733a2f2f696d672e736869656c64732e696f2f707970692f762f646a616e676f726573746672616d65776f726b2e737667)
