@@ -10,7 +10,7 @@
 [![Code Style](https://img.shields.io/badge/Прочитать-Документацию_Code_Style-blue?style=for-the-badge)](https://github.com/HRSpaceX/backend/blob/e/chore/docs/.github/dev_docs/code_style_rules.md) [![Pull Request](https://img.shields.io/badge/Прочитать-Документацию_Pull_Request-2ea44f?style=for-the-badge)](https://github.com/HRSpaceX/backend/blob/e/chore/docs/.github/dev_docs/pull_requests_rules.md)
 
 ## Ссылка на проект
-||[![Site](https://img.shields.io/badge/Перейти_на-Сайт-Cyanf?style=for-the-badge)](http://devinse.store/api/v1/)||
+[![Site](https://img.shields.io/badge/Перейти_на-Сайт-Cyanf?style=for-the-badge)](http://devinse.store/api/v1/)
 
 ### Цель сервиса
 Дать заказчикам возможность размещать заявку на подбор по трем моделям оплаты. Рекрутерам – откликаться и вести переписку с клиентами в рамках внутреннего чата, направлять резюме и регистрировать вышедшего сотрудника (дата выхода и прохождение испытательного срока). 
